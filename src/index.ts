@@ -7,6 +7,9 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 
+// Servir archivos estáticos desde la carpeta public
+app.use(express.static(path.join(__dirname, '..', 'public')))
+
 // Home route - HTML
 app.get('/', (req, res) => {
   res.type('html').send(`
@@ -47,6 +50,11 @@ app.get('/api-data', (req, res) => {
 // Health check
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() })
+})
+
+const PORT = process.env.PORT || 3000
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`)
 })
 
 export default app
