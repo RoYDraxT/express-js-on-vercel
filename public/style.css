@@ -1,9 +1,247 @@
+:root {
+  --primary: #18e4cc;
+  --primary-dark: #0f766e;
+  --secondary: #4f46e5;
+  --bg-main: #f6f8fb;
+  --bg-card: #ffffff;
+  --bg-sidebar: linear-gradient(180deg, #0f154b, #020617);
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-light: #cbd5e1;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --radius: 14px;
+  --shadow-soft: 0 10px 30px rgba(15, 23, 42, 0.08);
+  --shadow-hover: 0 15px 40px rgba(15, 23, 42, 0.12);
+  --sidebar-width: 260px;
+  --nav-item-padding: 12px 24px;
+  --nav-gap: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-    font-family: system-ui, sans-serif;
-    margin: 2rem;
-    line-height: 1.5;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background: var(--bg-sidebar);
+  color: var(--text-light);
+  padding: 24px 0;
+  position: fixed;
+  height: 100vh;
+  box-shadow: 4px 0 25px rgba(0,0,0,0.2);
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4acdd4, #34ffee);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(20,184,166,0.3);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.logo-text h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.logo-text span {
+  font-size: 12px;
+  color: #60e1d4;
+  font-weight: 500;
+}
+
+.nav-menu {
+  list-style: none;
+  margin-top: 20px;
+  padding: 0 12px;
+}
+
+.nav-subtitle {
+  padding: 14px 24px 8px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #60e1d4;
+  font-weight: 600;
+  margin-top: 24px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--nav-item-padding);
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  position: relative;
+  margin: 4px 0;
+  font-weight: 500;
+}
+
+.nav-link:hover {
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.nav-link.active {
+  background: linear-gradient(90deg, #4acdd4, #10b3a5);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(45, 248, 224, 0.3);
+}
+
+.nav-link .icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  opacity: 0.8;
+  stroke: currentColor;
+}
+
+/* Íconos SVG (reemplaza estos por tus propios SVG o usa una librería) */
+.icon-home {
+  fill: none;
+  stroke: currentColor;
+}
+
+.icon-doc {
+  fill: none;
+  stroke: currentColor;
+}
+
+.icon-folder {
+  fill: none;
+  stroke: currentColor;
+}
+
+.icon-chart {
+  fill: none;
+  stroke: currentColor;
+}
+
+.icon-ai {
+  fill: none;
+  stroke: currentColor;
+}
+
+.content {
+  margin-left: var(--sidebar-width);
+  padding: 40px;
+  flex: 1;
+}
+
+.content h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.content p {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.card-value {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.success {
+  background: rgba(34,197,94,0.15);
+  color: var(--success);
+}
+
+.badge.warning {
+  background: rgba(245,158,11,0.15);
+  color: var(--warning);
+}
+
+.badge.danger {
+  background: rgba(239,68,68,0.15);
+  color: var(--danger);
+}
+
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 210px;
   }
-  nav a {
-    margin-right: 1rem;
+
+  .sidebar {
+    width: var(--sidebar-width);
   }
-  
+
+  .content {
+    margin-left: var(--sidebar-width);
+    padding: 24px;
+  }
+}
