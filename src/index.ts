@@ -2,7 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { execSync } from 'child_process'
-import { db, guardarFichaTecnica, obtenerCategorias, obtenerCultivosPorCategoria } from './database.js'
+import { db, guardarFichaTecnica, obtenerCategorias, obtenerCultivosPorCategoria, obtenerTodosCultivos } from './database.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -75,6 +75,17 @@ app.get('/api/cultivos/:categoria_id', async (req, res) => {
   try {
     const { categoria_id } = req.params
     const cultivos = await obtenerCultivosPorCategoria(categoria_id)
+    res.json(cultivos)
+  } catch (error: any) {
+    console.error('Error obteniendo cultivos:', error)
+    res.status(500).json({ error: 'Error al obtener cultivos' })
+  }
+})
+
+// Obtener TODOS los cultivos
+app.get('/api/todos-cultivos', async (req, res) => {
+  try {
+    const cultivos = await obtenerTodosCultivos()
     res.json(cultivos)
   } catch (error: any) {
     console.error('Error obteniendo cultivos:', error)

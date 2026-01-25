@@ -15,15 +15,19 @@ class CalculadoraCacaoConvencional:
 
     def generar_ficha_tecnica(self) -> Dict[str, Any]:
         # ===== VALORES DEL EXCEL OFICIAL (promedios anuales) =====
-        COSTO_INSTALACION = 9998.00          # S/ por ha (único, en año 0)
+        COSTO_INSTALACION_SENSIBILIZADO = 8158.00
         PRODUCCION_PROMEDIO_QQ = 26.2        # qq/ha/año
+        NUMERO_TOTAL_PLANTANES = self.hectareas * 10000 / (3 * 3)
+        PRODUCCION_ARBOL_ANIO = 30/1111
+        MERMA_PRODUCTIVA = 0.02
+        RENDIMIENTO_PROMEDIO = 0.89
         INGRESO_ANUAL_PROMEDIO = 11514.19    # S/ por ha/año
         COSTO_ANUAL_PROMEDIO = 4870.50       # S/ por ha/año
         UTILIDAD_ANUAL_PROMEDIO = INGRESO_ANUAL_PROMEDIO - COSTO_ANUAL_PROMEDIO  # ~6,643.69
 
         # Escalar por hectáreas
-        inversion_inicial = COSTO_INSTALACION * self.hectareas
-        produccion_qq = PRODUCCION_PROMEDIO_QQ * self.hectareas
+        inversion_inicial = COSTO_INSTALACION_SENSIBILIZADO * self.hectareas
+        produccion_qq = NUMERO_TOTAL_PLANTANES * PRODUCCION_ARBOL_ANIO * RENDIMIENTO_PROMEDIO * (1 - MERMA_PRODUCTIVA)
         ingreso_anual = INGRESO_ANUAL_PROMEDIO * self.hectareas
         costo_anual = COSTO_ANUAL_PROMEDIO * self.hectareas
         utilidad_anual = UTILIDAD_ANUAL_PROMEDIO * self.hectareas
@@ -53,7 +57,7 @@ class CalculadoraCacaoConvencional:
             },
             'instalacion': {
                 'costo_total': round(inversion_inicial, 2),
-                'costo_por_hectarea': round(COSTO_INSTALACION, 2),
+                'costo_por_hectarea': round(COSTO_INSTALACION_SENSIBILIZADO, 2),
                 'desglose': {}
             },
             'produccion_promedio': {

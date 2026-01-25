@@ -252,8 +252,20 @@ export function obtenerCategorias(): Promise<any[]> {
 export function obtenerCultivosPorCategoria(categoria_id: string): Promise<any[]> {
   return new Promise((resolve, reject) => {
     db.all(
-      'SELECT id, nombre FROM cultivos WHERE categoria_id = ? ORDER BY nombre',
+      'SELECT id, nombre, categoria_id FROM cultivos WHERE categoria_id = ? ORDER BY nombre',
       [categoria_id],
+      (err, rows) => {
+        if (err) reject(err)
+        else resolve(rows || [])
+      }
+    )
+  })
+}
+
+export function obtenerTodosCultivos(): Promise<any[]> {
+  return new Promise((resolve, reject) => {
+    db.all(
+      'SELECT id, nombre, categoria_id FROM cultivos ORDER BY categoria_id, nombre',
       (err, rows) => {
         if (err) reject(err)
         else resolve(rows || [])

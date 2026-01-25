@@ -48,8 +48,8 @@
 
             <div class="form-item">
               <label for="cultivo">Cultivo</label>
-              <select id="cultivo" disabled>
-                <option value="">Selecciona una categoría primero</option>
+              <select id="cultivo">
+                <option value="">Selecciona un cultivo</option>
               </select>
             </div>
 
@@ -118,69 +118,85 @@
     </div>
 
     <script>
+      let allCultivos = [];
+      let allCategorias = [];
+
       // Cargar categorías al iniciar
       async function cargarCategorias() {
         try {
           const response = await fetch('/api/categorias');
-          const categorias = await response.json();
+          allCategorias = await response.json();
           const select = document.getElementById('categoria');
 
-          categorias.forEach((cat) => {
+          allCategorias.forEach((cat) => {
             const option = document.createElement('option');
             option.value = cat.id;
             option.textContent = cat.nombre;
             select.appendChild(option);
           });
-
-          if (categorias.length > 0) {
-            select.value = categorias[0].id;
-          }
         } catch (error) {
           console.error('Error cargando categorías:', error);
         }
       }
 
-      // Agrega esto después de cargarCategorias()
-      async function cargarCultivosPorCategoria(categoriaId) {
-        const cultivoSelect = document.getElementById('cultivo');
-        cultivoSelect.innerHTML = '<option value="">Cargando...</option>';
-        cultivoSelect.disabled = true;
-
+      // Cargar todos los cultivos
+      async function cargarCultivos() {
         try {
-          const response = await fetch(`/api/cultivos/${categoriaId}`);
-          const cultivos = await response.json();
+          const response = await fetch('/api/todos-cultivos');
+          allCultivos = await response.json();
+          const cultivoSelect = document.getElementById('cultivo');
           
-          cultivoSelect.innerHTML = '<option value="">Selecciona un cultivo</option>';
-          cultivos.forEach(cultivo => {
+          allCultivos.forEach(cultivo => {
             const option = document.createElement('option');
             option.value = cultivo.id;
             option.textContent = cultivo.nombre;
+            option.dataset.categoriaId = cultivo.categoria_id;
             cultivoSelect.appendChild(option);
           });
-          
-          cultivoSelect.disabled = false;
         } catch (error) {
           console.error('Error cargando cultivos:', error);
-          cultivoSelect.innerHTML = '<option value="">Error al cargar</option>';
         }
       }
 
-      // Agrega evento al select de categoría
-      document.getElementById('categoria').addEventListener('change', function() {
-        const categoriaId = this.value;
-        if (categoriaId) {
-          cargarCultivosPorCategoria(categoriaId);
-        } else {
-          document.getElementById('cultivo').innerHTML = '<option value="">Selecciona una categoría primero</option>';
-          document.getElementById('cultivo').disabled = true;
-        }
-      });
+      // Cuando se elige un cultivo, auto-rellenar categoría
+      document.addEventListener('DOMContentLoaded', () => {
+        cargarCategorias();
+        cargarCultivos();
+        
+        document.getElementById('cultivo').addEventListener('change', function() {
+          const selectedOption = this.options[this.selectedIndex];
+          const categoriaId = selectedOption.dataset.categoriaId;
+          
+          if (categoriaId) {
+            document.getElementById('categoria').value = categoriaId;
+          }
+        });
 
-      document.addEventListener('DOMContentLoaded', cargarCategorias);
+        // Cuando se elige categoría, filtrar cultivos
+        document.getElementById('categoria').addEventListener('change', function() {
+          const categoriaId = this.value;
+          const cultivoSelect = document.getElementById('cultivo');
+          
+          if (categoriaId) {
+            const opcionesCultivo = cultivoSelect.querySelectorAll('option');
+            opcionesCultivo.forEach(opt => {
+              if (opt.value === '') {
+                opt.style.display = 'block';
+              } else if (opt.dataset.categoriaId === categoriaId) {
+                opt.style.display = 'block';
+              } else {
+                opt.style.display = 'none';
+              }
+            });
+            cultivoSelect.value = '';
+          }
+        });
+      });
 
       async function calcularFichaTecnica() {
         const hectareas = parseFloat(document.getElementById('hectareas').value);
-        const cultivo_id = document.getElementById('cultivo').value; // Ahora usamos cultivo_id
+        const categoria_id = document.getElementById('categoria').value;
+        const cultivo_id = document.getElementById('cultivo').value;
         const btnCalcular = document.querySelector('.btn-calcular');
         const loading = document.getElementById('loading');
         const mensajeError = document.getElementById('mensajeError');
@@ -197,16 +213,31 @@
           return;
         }
 
+        // Validar que sea PEREN_SEMI y cacao (convencional)
+        if (categoria_id !== 'PEREN_SEMI') {
+          mensajeError.textContent = 'Aún no se ha registrado dicha ficha técnica.';
+          mensajeError.classList.add('activo');
+          return;
+        }
+
+        const cultivoOption = document.getElementById('cultivo').options[document.getElementById('cultivo').selectedIndex];
+        const cultivoNombre = cultivoOption.textContent.toLowerCase();
+        
+        if (!cultivoNombre.includes('cacao') || !cultivoNombre.includes('convencional')) {
+          mensajeError.textContent = 'Aún no se ha registrado dicha ficha técnica.';
+          mensajeError.classList.add('activo');
+          return;
+        }
+
         mensajeError.classList.remove('activo');
         loading.classList.add('activo');
         btnCalcular.disabled = true;
 
         try {
-          // Cambia la URL a la nueva API
           const response = await fetch('/api/ficha-tecnica-cacao', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hectareas, cultivo_id: parseInt(cultivo_id) })
+            body: JSON.stringify({ hectareas, categoria_id, cultivo_id: parseInt(cultivo_id) })
           });
 
           const data = await response.json();

@@ -8,90 +8,6 @@ Base: 1 hectárea
 from . import parametros as p
 from typing import Dict, Any
 
-def obtener_costos_instalacion(self) -> Dict[str, Any]:
-    """
-    Devuelve costo de instalación sensibilizado del Excel (S/ 9,998 por ha)
-    """
-    costo_total = p.COSTO_INSTALACION_SENSIBILIZADO * self.hectareas
-    return {
-        'hectareas': self.hectareas,
-        'costo_total': round(costo_total, 2),
-        'resumen': {
-            'costo_total_1ha': p.COSTO_INSTALACION_SENSIBILIZADO
-        },
-        'desglose': {}  # Puedes mantener el desglose real si lo deseas, pero no afecta la validación
-    }
-
-def obtener_año_produccion(self, año: int) -> Dict[str, Any]:
-    """
-    Calcula ingresos reales + costos sensibilizados del Excel
-    """
-    if año < 4 or año > 15:
-        raise ValueError(f"El año debe estar entre 4 y 15. Recibido: {año}")
-    
-    # --- 1. Determinar QQ bruto según el año ---
-    if 4 <= año <= 6:
-        qq_bruto = 24.0
-    elif 7 <= año <= 9:
-        qq_bruto = 27.0
-    elif 10 <= año <= 11:
-        qq_bruto = 30.0
-    elif 12 <= año <= 13:
-        qq_bruto = 28.5
-    else:  # 14-15
-        qq_bruto = 24.0
-
-    # --- 2. Aplicar merma (2%) ---
-    qq_neto = qq_bruto * (1 - p.MERMA_PRODUCTIVA)  # Ej: 30 → 29.4
-
-    # --- 3. Distribución primera/segunda ---
-    if 4 <= año <= 6:
-        primera = 0.90
-    elif 7 <= año <= 9:
-        primera = 0.90
-    elif 10 <= año <= 11:
-        primera = 0.95
-    elif 12 <= año <= 13:
-        primera = 0.80
-    else:  # 14-15
-        primera = 0.75
-    
-    segunda = 1.0 - primera
-
-    # --- 4. Calcular ingresos reales ---
-    qq_primera = qq_neto * primera
-    qq_segunda = qq_neto * segunda
-    ingreso_primera = qq_primera * p.PRECIO_VENTA_PRIMERA
-    ingreso_segunda = qq_segunda * p.PRECIO_VENTA_SEGUNDA
-    ingreso_total = ingreso_primera + ingreso_segunda
-
-    # --- 5. Obtener costo sensibilizado del Excel ---
-    if 4 <= año <= 9:
-        costo_sens = p.COSTOS_SENSIBILIZADOS_PROD['año_4_6']
-    else:  # 10-15
-        costo_sens = p.COSTOS_SENSIBILIZADOS_PROD['año_10_11']
-
-    costo_total = costo_sens * self.hectareas
-    ingreso_total_esc = ingreso_total * self.hectareas
-    utilidad = ingreso_total_esc - costo_total
-
-    return {
-        'hectareas': self.hectareas,
-        'año_produccion': año,
-        'produccion': {
-            'qq_producidos': round(qq_neto * self.hectareas, 1)
-        },
-        'ingresos': {
-            'ingreso_total': round(ingreso_total_esc, 2)
-        },
-        'costos_totales': {
-            'total': round(costo_total, 2)
-        },
-        'rentabilidad': {
-            'utilidad_bruta': round(utilidad, 2)
-        }
-    }
-
 class CacaoInstalacion:
     """
     Calcula todos los costos de instalación del cultivo de cacao
@@ -499,7 +415,7 @@ class CacaoInstalacion:
         
         return self.costos_indirectos['total']
     
-    # ===== CALCULAR TODO =====
+    # ===== CALCULAR =====
     def calcular(self):
         """
         Ejecuta todos los cálculos y retorna resultado completo
