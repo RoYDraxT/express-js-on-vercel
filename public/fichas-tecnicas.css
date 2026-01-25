@@ -1,0 +1,187 @@
+/* Fichas Técnicas Styles */
+
+/* Formulario Horizontal */
+.formulario-horizontal {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-item label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.form-item input,
+.form-item select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.form-item input:focus,
+.form-item select:focus {
+  outline: none;
+  border-color: #1ef5c6;
+  box-shadow: 0 0 0 3px rgba(30, 245, 198, 0.1);
+}
+
+.btn-calcular {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #29ddce, #4acdd4);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+
+.btn-calcular:hover {
+  transform: translateY(-2px);
+}
+
+.btn-calcular:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.error-mensaje {
+  background: #fee;
+  color: #c33;
+  padding: 15px;
+  border-radius: 6px;
+  margin-top: 15px;
+  display: none;
+}
+
+.error-mensaje.activo {
+  display: block;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  display: none;
+}
+
+.loading.activo {
+  display: block;
+}
+
+.spinner {
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #1ef5c6;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sectores Contenedor */
+.sectores-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.sector {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #1ef5c6;
+}
+
+.sector.oculto {
+  display: none;
+}
+
+.sector.visible {
+  display: block;
+}
+
+.sector h3 {
+  color: #1e3c72;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sector-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dato-fila {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dato-fila:last-child {
+  border-bottom: none;
+}
+
+.dato-label {
+  color: #666;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dato-valor {
+  color: #1e3c72;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.valor-dinero {
+  color: #22c55e;
+}
+
+.valor-porcentaje {
+  color: #f59e0b;
+}
+
+.valor-cantidad {
+  color: #3b82f6;
+}

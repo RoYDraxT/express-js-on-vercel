@@ -4,188 +4,7 @@
     <meta charset="utf-8"/>
     <title>Fichas Técnicas - EcoModel</title>
     <link rel="stylesheet" href="/style.css" />
-    <style>
-      .ficha-container {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 30px;
-        margin-top: 30px;
-      }
-
-      .formulario-entrada {
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        height: fit-content;
-      }
-
-      .formulario-entrada h3 {
-        color: #1e3c72;
-        margin-bottom: 20px;
-        font-size: 18px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #333;
-        font-weight: 500;
-        font-size: 14px;
-      }
-
-      .form-group input {
-        width: 100%;
-        padding: 10px;
-        border: 2px solid #e0e0e0;
-        border-radius: 6px;
-        font-size: 14px;
-        transition: border-color 0.3s;
-      }
-
-      .form-group input:focus {
-        outline: none;
-        border-color: #1ef5c6;
-        box-shadow: 0 0 0 3px rgba(30, 245, 198, 0.1);
-      }
-
-      .btn-calcular {
-        width: 100%;
-        padding: 12px;
-        background: linear-gradient(135deg, #29ddce, #4acdd4);
-        color: white;
-        border: none;
-        border-radius: 6px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s;
-      }
-
-      .btn-calcular:hover {
-        transform: translateY(-2px);
-      }
-
-      .btn-calcular:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-
-      .resultados {
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      }
-
-      .resultados.oculto {
-        display: none;
-      }
-
-      .seccion-resultado {
-        margin-bottom: 30px;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #e0e0e0;
-      }
-
-      .seccion-resultado:last-child {
-        border-bottom: none;
-      }
-
-      .seccion-resultado h4 {
-        color: #1e3c72;
-        margin-bottom: 15px;
-        font-size: 16px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .dato-resultado {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        gap: 15px;
-        margin-bottom: 12px;
-        align-items: center;
-      }
-
-      .dato-label {
-        color: #666;
-        font-size: 13px;
-        font-weight: 500;
-      }
-
-      .dato-valor {
-        color: #1e3c72;
-        font-weight: 600;
-        font-size: 14px;
-      }
-
-      .valor-dinero {
-        color: #22c55e;
-      }
-
-      .valor-porcentaje {
-        color: #f59e0b;
-      }
-
-      .valor-cantidad {
-        color: #3b82f6;
-      }
-
-      .error-mensaje {
-        background: #fee;
-        color: #c33;
-        padding: 15px;
-        border-radius: 6px;
-        margin-top: 15px;
-        display: none;
-      }
-
-      .error-mensaje.activo {
-        display: block;
-      }
-
-      .loading {
-        text-align: center;
-        padding: 20px;
-        color: #666;
-        display: none;
-      }
-
-      .loading.activo {
-        display: block;
-      }
-
-      .spinner {
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #1ef5c6;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 10px;
-      }
-
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-
-      .titulo-ficha {
-        color: #1e3c72;
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-
-      .subtitulo-ficha {
-        color: #666;
-        font-size: 14px;
-        margin-bottom: 20px;
-      }
-    </style>
+    <link rel="stylesheet" href="/fichas-tecnicas.css" />
   </head>
   <body>
     <div class="container">
@@ -217,118 +36,81 @@
         <h1>Fichas Técnicas</h1>
         <p>Genera fichas técnicas para diferentes cultivos y analiza su viabilidad financiera</p>
         
-        <div class="ficha-container">
-          <!-- Formulario de entrada -->
-          <div class="formulario-entrada">
-            <h3>Cacao Convencional</h3>
-            
-            <div class="form-group">
-              <label for="hectareas">Hectáreas *</label>
+        <!-- Formulario de entrada HORIZONTAL -->
+        <div class="formulario-horizontal">
+          <div class="form-row">
+            <div class="form-item">
+              <label for="categoria">Categoría</label>
+              <select id="categoria">
+                <option value="">Selecciona una categoría</option>
+              </select>
+            </div>
+
+            <div class="form-item">
+              <label for="cultivo">Cultivo</label>
+              <select id="cultivo" disabled>
+                <option value="">Selecciona una categoría primero</option>
+              </select>
+            </div>
+
+            <div class="form-item">
+              <label for="hectareas">Hectáreas</label>
               <input 
                 type="number" 
                 id="hectareas" 
                 min="0.1" 
                 step="0.1" 
                 value="1.0" 
-                placeholder="Ingresa hectáreas"
               />
-              <small style="color: #999; display: block; margin-top: 5px;">Valor por defecto: 1 hectárea</small>
             </div>
 
             <button class="btn-calcular" onclick="calcularFichaTecnica()">
-              Calcular Ficha Técnica
+              Calcular
             </button>
+          </div>
 
-            <div class="error-mensaje" id="mensajeError"></div>
-            <div class="loading" id="loading">
-              <div class="spinner"></div>
-              <div>Calculando ficha técnica...</div>
+          <div class="error-mensaje" id="mensajeError"></div>
+          <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Calculando ficha técnica...</div>
+          </div>
+        </div>
+
+        <!-- 4 SECTORES OCULTOS -->
+        <div class="sectores-container">
+          <!-- Sector 1: Parámetros -->
+          <div class="sector oculto" id="sector-parametros" data-ficha-id="">
+            <h3>Parámetros</h3>
+            <div class="sector-contenido">
+              <!-- Será llenado con JavaScript -->
             </div>
           </div>
 
-          <!-- Resultados -->
-          <div class="resultados oculto" id="resultados">
-            <div class="titulo-ficha">Ficha Técnica - Cacao Convencional</div>
-            <div class="subtitulo-ficha" id="subtituloFicha"></div>
-
-            <!-- Datos del Proyecto -->
-            <div class="seccion-resultado">
-              <h4>Datos del Proyecto</h4>
-              <div class="dato-resultado">
-                <div class="dato-label">Hectáreas</div>
-                <div class="dato-valor" id="dato-hectareas">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Variedad</div>
-                <div class="dato-valor" id="dato-variedad">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Ciclo Productivo</div>
-                <div class="dato-valor" id="dato-ciclo">-</div>
-              </div>
+          <!-- Sector 2: Producción -->
+          <div class="sector oculto" id="sector-produccion" data-ficha-id="">
+            <h3>Producción</h3>
+            <div class="sector-contenido">
+              <!-- Será llenado con JavaScript -->
             </div>
+          </div>
 
-            <!-- Instalación -->
-            <div class="seccion-resultado">
-              <h4>Costos de Instalación</h4>
-              <div class="dato-resultado">
-                <div class="dato-label">Costo Total</div>
-                <div class="dato-valor valor-dinero" id="dato-costo-total">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Costo por Hectárea</div>
-                <div class="dato-valor valor-dinero" id="dato-costo-ha">-</div>
-              </div>
+          <!-- Sector 3: Costos de Producción -->
+          <div class="sector oculto" id="sector-costos-produccion" data-ficha-id="">
+            <h3>Costos de Producción</h3>
+            <div class="sector-contenido">
+              <!-- Será llenado con JavaScript -->
             </div>
+          </div>
 
-            <!-- Producción (Año Referencia) -->
-            <div class="seccion-resultado">
-              <h4>Producción</h4>
-              <div class="dato-resultado">
-                <div class="dato-label">Producción (qq)</div>
-                <div class="dato-valor valor-cantidad" id="dato-produccion">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Ingresos</div>
-                <div class="dato-valor valor-dinero" id="dato-ingresos">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Costos</div>
-                <div class="dato-valor valor-dinero" id="dato-costos">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Utilidad</div>
-                <div class="dato-valor valor-dinero" id="dato-utilidad">-</div>
-              </div>
+          <!-- Sector 4: Costos de Instalación -->
+          <div class="sector oculto" id="sector-costos-instalacion" data-ficha-id="">
+            <h3>Costos de Instalación</h3>
+            <div class="sector-contenido">
+              <!-- Será llenado con JavaScript -->
             </div>
-
-            <!-- Análisis Financiero -->
-            <div class="seccion-resultado">
-              <h4>Análisis Financiero (15 años)</h4>
-              <div class="dato-resultado">
-                <div class="dato-label">Inversión Inicial</div>
-                <div class="dato-valor valor-dinero" id="dato-inversion">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Utilidad Neta (15 años)</div>
-                <div class="dato-valor valor-dinero" id="dato-utilidad-neta">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">ROI</div>
-                <div class="dato-valor valor-porcentaje" id="dato-roi">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">TIR</div>
-                <div class="dato-valor valor-porcentaje" id="dato-tir">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">VAN (10%)</div>
-                <div class="dato-valor valor-dinero" id="dato-van">-</div>
-              </div>
-              <div class="dato-resultado">
-                <div class="dato-label">Utilidad Anual Promedio</div>
-                <div class="dato-valor valor-dinero" id="dato-utilidad-anual">-</div>
-              </div>
+          </div>
+        </div>
+      </main>
             </div>
           </div>
         </div>
@@ -336,34 +118,95 @@
     </div>
 
     <script>
+      // Cargar categorías al iniciar
+      async function cargarCategorias() {
+        try {
+          const response = await fetch('/api/categorias');
+          const categorias = await response.json();
+          const select = document.getElementById('categoria');
+
+          categorias.forEach((cat) => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.nombre;
+            select.appendChild(option);
+          });
+
+          if (categorias.length > 0) {
+            select.value = categorias[0].id;
+          }
+        } catch (error) {
+          console.error('Error cargando categorías:', error);
+        }
+      }
+
+      // Agrega esto después de cargarCategorias()
+      async function cargarCultivosPorCategoria(categoriaId) {
+        const cultivoSelect = document.getElementById('cultivo');
+        cultivoSelect.innerHTML = '<option value="">Cargando...</option>';
+        cultivoSelect.disabled = true;
+
+        try {
+          const response = await fetch(`/api/cultivos/${categoriaId}`);
+          const cultivos = await response.json();
+          
+          cultivoSelect.innerHTML = '<option value="">Selecciona un cultivo</option>';
+          cultivos.forEach(cultivo => {
+            const option = document.createElement('option');
+            option.value = cultivo.id;
+            option.textContent = cultivo.nombre;
+            cultivoSelect.appendChild(option);
+          });
+          
+          cultivoSelect.disabled = false;
+        } catch (error) {
+          console.error('Error cargando cultivos:', error);
+          cultivoSelect.innerHTML = '<option value="">Error al cargar</option>';
+        }
+      }
+
+      // Agrega evento al select de categoría
+      document.getElementById('categoria').addEventListener('change', function() {
+        const categoriaId = this.value;
+        if (categoriaId) {
+          cargarCultivosPorCategoria(categoriaId);
+        } else {
+          document.getElementById('cultivo').innerHTML = '<option value="">Selecciona una categoría primero</option>';
+          document.getElementById('cultivo').disabled = true;
+        }
+      });
+
+      document.addEventListener('DOMContentLoaded', cargarCategorias);
+
       async function calcularFichaTecnica() {
         const hectareas = parseFloat(document.getElementById('hectareas').value);
+        const cultivo_id = document.getElementById('cultivo').value; // Ahora usamos cultivo_id
         const btnCalcular = document.querySelector('.btn-calcular');
         const loading = document.getElementById('loading');
-        const resultados = document.getElementById('resultados');
         const mensajeError = document.getElementById('mensajeError');
 
-        // Validar
         if (isNaN(hectareas) || hectareas <= 0) {
-          mensajeError.textContent = 'Por favor ingresa un número válido de hectáreas mayor a 0';
+          mensajeError.textContent = 'Ingresa un número válido de hectáreas mayor a 0';
           mensajeError.classList.add('activo');
           return;
         }
 
-        // Limpiar errores
+        if (!cultivo_id) {
+          mensajeError.textContent = 'Selecciona un cultivo';
+          mensajeError.classList.add('activo');
+          return;
+        }
+
         mensajeError.classList.remove('activo');
-        resultados.classList.add('oculto');
         loading.classList.add('activo');
         btnCalcular.disabled = true;
 
         try {
-          // Llamar API
+          // Cambia la URL a la nueva API
           const response = await fetch('/api/ficha-tecnica-cacao', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ hectareas })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hectareas, cultivo_id: parseInt(cultivo_id) })
           });
 
           const data = await response.json();
@@ -372,10 +215,7 @@
             throw new Error(data.error || 'Error desconocido');
           }
 
-          // Llenar datos
-          llenarResultados(data);
-          resultados.classList.remove('oculto');
-
+          mostrarSectores(data);
         } catch (error) {
           mensajeError.textContent = 'Error: ' + error.message;
           mensajeError.classList.add('activo');
@@ -386,48 +226,57 @@
         }
       }
 
-      function llenarResultados(ficha) {
+      function mostrarSectores(ficha) {
+        const fichaId = ficha.id_ficha || 'temp-' + Date.now();
         const datos = ficha.datos_proyecto;
         const analisis = ficha.analisis_financiero;
         const produccion = ficha.produccion_promedio;
 
-        // Datos del proyecto
-        document.getElementById('subtituloFicha').textContent = 
-          `Análisis financiero para ${datos.hectareas} hectárea(s)`;
-        document.getElementById('dato-hectareas').textContent = datos.hectareas;
-        document.getElementById('dato-variedad').textContent = datos.variedad;
-        document.getElementById('dato-ciclo').textContent = datos.ciclo_productivo_años + ' años';
+        // Sector 1: Parámetros
+        llenarSector('sector-parametros', fichaId, [
+          { label: 'Hectáreas', valor: datos.hectareas },
+          { label: 'Variedad', valor: datos.variedad },
+          { label: 'Ciclo Productivo', valor: datos.ciclo_productivo_años + ' años' }
+        ]);
 
-        // Instalación
-        document.getElementById('dato-costo-total').textContent = 
-          '$' + formatNumber(ficha.instalacion.costo_total);
-        document.getElementById('dato-costo-ha').textContent = 
-          '$' + formatNumber(ficha.instalacion.costo_por_hectarea);
+        // Sector 2: Producción
+        llenarSector('sector-produccion', fichaId, [
+          { label: 'Producción (qq)', valor: produccion.produccion_qq, clase: 'valor-cantidad' },
+          { label: 'Ingresos', valor: '$' + formatNumber(produccion.ingresos), clase: 'valor-dinero' }
+        ]);
 
-        // Producción
-        document.getElementById('dato-produccion').textContent = 
-          produccion.produccion_qq + ' qq';
-        document.getElementById('dato-ingresos').textContent = 
-          '$' + formatNumber(produccion.ingresos);
-        document.getElementById('dato-costos').textContent = 
-          '$' + formatNumber(produccion.costos);
-        document.getElementById('dato-utilidad').textContent = 
-          '$' + formatNumber(produccion.utilidad);
+        // Sector 3: Costos de Producción
+        llenarSector('sector-costos-produccion', fichaId, [
+          { label: 'Costos', valor: '$' + formatNumber(produccion.costos), clase: 'valor-dinero' },
+          { label: 'Utilidad', valor: '$' + formatNumber(produccion.utilidad), clase: 'valor-dinero' }
+        ]);
 
-        // Análisis financiero
-        document.getElementById('dato-inversion').textContent = 
-          '$' + formatNumber(analisis.inversion_inicial);
-        document.getElementById('dato-utilidad-neta').textContent = 
-          '$' + formatNumber(analisis.utilidad_neta_15años);
-        const roi = analisis.roi_anual_porcentaje != null ? analisis.roi_anual_porcentaje : 0;
-        document.getElementById('dato-roi').textContent = roi.toFixed(2) + '%';
-        const tir = analisis.tir_porcentaje != null ? analisis.tir_porcentaje : 0;
-        document.getElementById('dato-tir').textContent = 
-        tir.toFixed(2) + '%';
-        const van = analisis.van_tasa_10_pct != null ? analisis.van_tasa_10_pct : 0;
-        document.getElementById('dato-van').textContent = '$' + formatNumber(van);
-        document.getElementById('dato-utilidad-anual').textContent = 
-          '$' + formatNumber(analisis.utilidad_anual_promedio);
+        // Sector 4: Costos de Instalación
+        llenarSector('sector-costos-instalacion', fichaId, [
+          { label: 'Costo Total', valor: '$' + formatNumber(ficha.instalacion.costo_total), clase: 'valor-dinero' },
+          { label: 'Costo por Hectárea', valor: '$' + formatNumber(ficha.instalacion.costo_por_hectarea), clase: 'valor-dinero' }
+        ]);
+
+        // Hacer visibles todos los sectores
+        document.querySelectorAll('.sector').forEach(sector => {
+          sector.classList.remove('oculto');
+          sector.classList.add('visible');
+          sector.dataset.fichaId = fichaId;
+        });
+      }
+
+      function llenarSector(sectorId, fichaId, datos) {
+        const sector = document.getElementById(sectorId);
+        const contenido = sector.querySelector('.sector-contenido');
+        
+        contenido.innerHTML = datos.map(d => `
+          <div class="dato-fila">
+            <div class="dato-label">${d.label}</div>
+            <div class="dato-valor ${d.clase || ''}">
+              ${d.valor}
+            </div>
+          </div>
+        `).join('');
       }
 
       function formatNumber(num) {
@@ -437,8 +286,7 @@
         }).format(num);
       }
 
-      // Calcular al presionar Enter en el input
-      document.getElementById('hectareas').addEventListener('keypress', function(e) {
+      document.getElementById('hectareas').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
           calcularFichaTecnica();
         }

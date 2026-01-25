@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { execSync } from 'child_process'
+import { db, guardarFichaTecnica, obtenerCategorias, obtenerCultivosPorCategoria } from './database.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -56,33 +57,45 @@ app.get('/fichas-tecnicas', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'components', 'fichas-tecnicas.html'))
 })
 
-// API: Calcular ficha técnica de cacao convencional
-app.post('/api/ficha-tecnica-cacao', (req, res) => {
+// ===== API ENDPOINTS =====
+
+// Obtener categorías
+app.get('/api/categorias', async (req, res) => {
   try {
-    const { hectareas = 1.0 } = req.body
+    const categorias = await obtenerCategorias()
+    res.json(categorias)
+  } catch (error: any) {
+    console.error('Error obteniendo categorías:', error)
+    res.status(500).json({ error: 'Error al obtener categorías' })
+  }
+})
+
+// Obtener cultivos por categoría
+app.get('/api/cultivos/:categoria_id', async (req, res) => {
+  try {
+    const { categoria_id } = req.params
+    const cultivos = await obtenerCultivosPorCategoria(categoria_id)
+    res.json(cultivos)
+  } catch (error: any) {
+    console.error('Error obteniendo cultivos:', error)
+    res.status(500).json({ error: 'Error al obtener cultivos' })
+  }
+})
+
+// Calcular ficha técnica de cacao
+app.post('/api/ficha-tecnica-cacao', async (req, res) => {
+  try {
+    const { hectareas = 1.0, categoria_id = 'PEREN_SEMI', cultivo_id = 1 } = req.body
     
-    // Validar entrada
     if (typeof hectareas !== 'number' || hectareas <= 0) {
-      return res.status(400).json({ 
-        error: 'Las hectáreas deben ser un número mayor a 0' 
-      })
+      return res.status(400).json({ error: 'Hectáreas inválidas' })
     }
 
-    // Verificar si Python está disponible
     if (!pythonCmd) {
-      return res.status(500).json({ 
-        error: 'Python no está instalado o no está en el PATH',
-        soluciones: [
-          '1. Instalar Python desde python.org',
-          '2. Marcar "Add Python to PATH" durante la instalación',
-          '3. Reiniciar la PC'
-        ]
-      })
+      return res.status(500).json({ error: 'Python no está disponible' })
     }
     
     const projectRoot = path.join(__dirname, '..')
-    
-    // Ejecutar como módulo Python
     const result = execSync(`${pythonCmd} -m calculadoras.cacao_convencional.ejecutar ${hectareas}`, {
       cwd: projectRoot,
       encoding: 'utf-8',
@@ -92,38 +105,24 @@ app.post('/api/ficha-tecnica-cacao', (req, res) => {
     const fichaData = JSON.parse(result.trim())
     
     if (fichaData.error) {
-      return res.status(400).json({ 
-        error: fichaData.error, 
-        type: fichaData.type,
-        trace: fichaData.trace
-      })
+      return res.status(400).json(fichaData)
     }
     
-    res.json(fichaData)
-  } catch (error: any) {
-    console.error('❌ Error ejecutando calculadora:')
-    console.error('  Mensaje:', error.message)
-    if (error.stdout) console.error('  Stdout:', error.stdout.toString())
-    if (error.stderr) console.error('  Stderr:', error.stderr.toString())
+    // Guardar en BD
+    const fichaId = await guardarFichaTecnica(
+      categoria_id,
+      cultivo_id,
+      'No especificada',
+      hectareas,
+      fichaData
+    )
     
-    res.status(500).json({ 
-      error: 'Error al ejecutar calculadora',
-      details: error.message,
-      soluciones: [
-        '✓ Si Python no está en PATH: Instálalo con "Add to PATH" habilitado',
-        '✓ Si falta el módulo calculadoras: Verifica que exista la carpeta calculadoras/',
-        '✓ Reinicia el servidor después de instalar Python'
-      ]
-    })
+    res.json({ ...fichaData, id_ficha: fichaId })
+    
+  } catch (error: any) {
+    console.error('Error:', error.message)
+    res.status(500).json({ error: 'Error al calcular ficha técnica' })
   }
-})
-
-// API endpoints
-app.get('/api-data', (req, res) => {
-  res.json({
-    message: 'Here is some sample API data',
-    items: ['apple', 'banana', 'cherry'],
-  })
 })
 
 // Health check
