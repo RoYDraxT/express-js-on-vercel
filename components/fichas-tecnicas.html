@@ -1,0 +1,448 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Fichas Técnicas - EcoModel</title>
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+      .ficha-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .formulario-entrada {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        height: fit-content;
+      }
+
+      .formulario-entrada h3 {
+        color: #1e3c72;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 2px solid #e0e0e0;
+        border-radius: 6px;
+        font-size: 14px;
+        transition: border-color 0.3s;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #1ef5c6;
+        box-shadow: 0 0 0 3px rgba(30, 245, 198, 0.1);
+      }
+
+      .btn-calcular {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #29ddce, #4acdd4);
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+      .btn-calcular:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-calcular:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .resultados {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+
+      .resultados.oculto {
+        display: none;
+      }
+
+      .seccion-resultado {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+
+      .seccion-resultado:last-child {
+        border-bottom: none;
+      }
+
+      .seccion-resultado h4 {
+        color: #1e3c72;
+        margin-bottom: 15px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .dato-resultado {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        gap: 15px;
+        margin-bottom: 12px;
+        align-items: center;
+      }
+
+      .dato-label {
+        color: #666;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .dato-valor {
+        color: #1e3c72;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .valor-dinero {
+        color: #22c55e;
+      }
+
+      .valor-porcentaje {
+        color: #f59e0b;
+      }
+
+      .valor-cantidad {
+        color: #3b82f6;
+      }
+
+      .error-mensaje {
+        background: #fee;
+        color: #c33;
+        padding: 15px;
+        border-radius: 6px;
+        margin-top: 15px;
+        display: none;
+      }
+
+      .error-mensaje.activo {
+        display: block;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+        display: none;
+      }
+
+      .loading.activo {
+        display: block;
+      }
+
+      .spinner {
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #1ef5c6;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 10px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .titulo-ficha {
+        color: #1e3c72;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+
+      .subtitulo-ficha {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="sidebar">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-leaf w-6 h-6 text-white" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          </div>
+          <div class="logo-text">
+            <h2>EcoModel</h2>
+            <span>Fintech Verde</span>
+          </div>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="/" class="nav-link"><svg class="icon icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg> Panel Principal</a></li>
+          <li><a href="/fichas-tecnicas" class="nav-link active"><svg class="icon icon-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg> Fichas Técnicas</a></li>
+          <li><a href="/evaluacion-credito" class="nav-link"><svg class="icon icon-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Evaluación de Crédito</a></li>
+          
+          <li class="nav-subtitle">HERRAMIENTAS</li>
+          <li><a href="/gestion-cartera" class="nav-link"><svg class="icon icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> Gestión de Cartera</a></li>
+          <li><a href="/analiticas" class="nav-link"><svg class="icon icon-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a1.5 1.5 0 00-1.5 1.5v12a1.5 1.5 0 001.5 1.5H17"/></svg> Analíticas</a></li>
+          
+          <li class="nav-subtitle">INTELIGENCIA</li>
+          <li><a href="/eco-asesor" class="nav-link"><svg class="icon icon-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 110 6 3 3 0 010-6zm0 9a3 3 0 110 6 3 3 0 010-6zm6-7a3 3 0 110 6 3 3 0 010-6zm-12 0a3 3 0 110 6 3 3 0 010-6z"/></svg> Eco-Asesor IA</a></li>
+        </ul>
+      </nav>
+      
+      <main class="content">
+        <h1>Fichas Técnicas</h1>
+        <p>Genera fichas técnicas para diferentes cultivos y analiza su viabilidad financiera</p>
+        
+        <div class="ficha-container">
+          <!-- Formulario de entrada -->
+          <div class="formulario-entrada">
+            <h3>Cacao Convencional</h3>
+            
+            <div class="form-group">
+              <label for="hectareas">Hectáreas *</label>
+              <input 
+                type="number" 
+                id="hectareas" 
+                min="0.1" 
+                step="0.1" 
+                value="1.0" 
+                placeholder="Ingresa hectáreas"
+              />
+              <small style="color: #999; display: block; margin-top: 5px;">Valor por defecto: 1 hectárea</small>
+            </div>
+
+            <button class="btn-calcular" onclick="calcularFichaTecnica()">
+              Calcular Ficha Técnica
+            </button>
+
+            <div class="error-mensaje" id="mensajeError"></div>
+            <div class="loading" id="loading">
+              <div class="spinner"></div>
+              <div>Calculando ficha técnica...</div>
+            </div>
+          </div>
+
+          <!-- Resultados -->
+          <div class="resultados oculto" id="resultados">
+            <div class="titulo-ficha">Ficha Técnica - Cacao Convencional</div>
+            <div class="subtitulo-ficha" id="subtituloFicha"></div>
+
+            <!-- Datos del Proyecto -->
+            <div class="seccion-resultado">
+              <h4>Datos del Proyecto</h4>
+              <div class="dato-resultado">
+                <div class="dato-label">Hectáreas</div>
+                <div class="dato-valor" id="dato-hectareas">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Variedad</div>
+                <div class="dato-valor" id="dato-variedad">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Ciclo Productivo</div>
+                <div class="dato-valor" id="dato-ciclo">-</div>
+              </div>
+            </div>
+
+            <!-- Instalación -->
+            <div class="seccion-resultado">
+              <h4>Costos de Instalación</h4>
+              <div class="dato-resultado">
+                <div class="dato-label">Costo Total</div>
+                <div class="dato-valor valor-dinero" id="dato-costo-total">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Costo por Hectárea</div>
+                <div class="dato-valor valor-dinero" id="dato-costo-ha">-</div>
+              </div>
+            </div>
+
+            <!-- Producción (Año Referencia) -->
+            <div class="seccion-resultado">
+              <h4>Producción</h4>
+              <div class="dato-resultado">
+                <div class="dato-label">Producción (qq)</div>
+                <div class="dato-valor valor-cantidad" id="dato-produccion">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Ingresos</div>
+                <div class="dato-valor valor-dinero" id="dato-ingresos">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Costos</div>
+                <div class="dato-valor valor-dinero" id="dato-costos">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Utilidad</div>
+                <div class="dato-valor valor-dinero" id="dato-utilidad">-</div>
+              </div>
+            </div>
+
+            <!-- Análisis Financiero -->
+            <div class="seccion-resultado">
+              <h4>Análisis Financiero (15 años)</h4>
+              <div class="dato-resultado">
+                <div class="dato-label">Inversión Inicial</div>
+                <div class="dato-valor valor-dinero" id="dato-inversion">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Utilidad Neta (15 años)</div>
+                <div class="dato-valor valor-dinero" id="dato-utilidad-neta">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">ROI</div>
+                <div class="dato-valor valor-porcentaje" id="dato-roi">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">TIR</div>
+                <div class="dato-valor valor-porcentaje" id="dato-tir">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">VAN (10%)</div>
+                <div class="dato-valor valor-dinero" id="dato-van">-</div>
+              </div>
+              <div class="dato-resultado">
+                <div class="dato-label">Utilidad Anual Promedio</div>
+                <div class="dato-valor valor-dinero" id="dato-utilidad-anual">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      async function calcularFichaTecnica() {
+        const hectareas = parseFloat(document.getElementById('hectareas').value);
+        const btnCalcular = document.querySelector('.btn-calcular');
+        const loading = document.getElementById('loading');
+        const resultados = document.getElementById('resultados');
+        const mensajeError = document.getElementById('mensajeError');
+
+        // Validar
+        if (isNaN(hectareas) || hectareas <= 0) {
+          mensajeError.textContent = 'Por favor ingresa un número válido de hectáreas mayor a 0';
+          mensajeError.classList.add('activo');
+          return;
+        }
+
+        // Limpiar errores
+        mensajeError.classList.remove('activo');
+        resultados.classList.add('oculto');
+        loading.classList.add('activo');
+        btnCalcular.disabled = true;
+
+        try {
+          // Llamar API
+          const response = await fetch('/api/ficha-tecnica-cacao', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ hectareas })
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+            throw new Error(data.error || 'Error desconocido');
+          }
+
+          // Llenar datos
+          llenarResultados(data);
+          resultados.classList.remove('oculto');
+
+        } catch (error) {
+          mensajeError.textContent = 'Error: ' + error.message;
+          mensajeError.classList.add('activo');
+          console.error(error);
+        } finally {
+          loading.classList.remove('activo');
+          btnCalcular.disabled = false;
+        }
+      }
+
+      function llenarResultados(ficha) {
+        const datos = ficha.datos_proyecto;
+        const analisis = ficha.analisis_financiero;
+        const produccion = ficha.produccion_promedio;
+
+        // Datos del proyecto
+        document.getElementById('subtituloFicha').textContent = 
+          `Análisis financiero para ${datos.hectareas} hectárea(s)`;
+        document.getElementById('dato-hectareas').textContent = datos.hectareas;
+        document.getElementById('dato-variedad').textContent = datos.variedad;
+        document.getElementById('dato-ciclo').textContent = datos.ciclo_productivo_años + ' años';
+
+        // Instalación
+        document.getElementById('dato-costo-total').textContent = 
+          '$' + formatNumber(ficha.instalacion.costo_total);
+        document.getElementById('dato-costo-ha').textContent = 
+          '$' + formatNumber(ficha.instalacion.costo_por_hectarea);
+
+        // Producción
+        document.getElementById('dato-produccion').textContent = 
+          produccion.produccion_qq + ' qq';
+        document.getElementById('dato-ingresos').textContent = 
+          '$' + formatNumber(produccion.ingresos);
+        document.getElementById('dato-costos').textContent = 
+          '$' + formatNumber(produccion.costos);
+        document.getElementById('dato-utilidad').textContent = 
+          '$' + formatNumber(produccion.utilidad);
+
+        // Análisis financiero
+        document.getElementById('dato-inversion').textContent = 
+          '$' + formatNumber(analisis.inversion_inicial);
+        document.getElementById('dato-utilidad-neta').textContent = 
+          '$' + formatNumber(analisis.utilidad_neta_15años);
+        const roi = analisis.roi_anual_porcentaje != null ? analisis.roi_anual_porcentaje : 0;
+        document.getElementById('dato-roi').textContent = roi.toFixed(2) + '%';
+        const tir = analisis.tir_porcentaje != null ? analisis.tir_porcentaje : 0;
+        document.getElementById('dato-tir').textContent = 
+        tir.toFixed(2) + '%';
+        const van = analisis.van_tasa_10_pct != null ? analisis.van_tasa_10_pct : 0;
+        document.getElementById('dato-van').textContent = '$' + formatNumber(van);
+        document.getElementById('dato-utilidad-anual').textContent = 
+          '$' + formatNumber(analisis.utilidad_anual_promedio);
+      }
+
+      function formatNumber(num) {
+        return new Intl.NumberFormat('es-CO', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }).format(num);
+      }
+
+      // Calcular al presionar Enter en el input
+      document.getElementById('hectareas').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          calcularFichaTecnica();
+        }
+      });
+    </script>
+  </body>
+</html>
