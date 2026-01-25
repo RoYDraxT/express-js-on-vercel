@@ -8,6 +8,25 @@ const __dirname = path.dirname(__filename)
 
 const app = express()
 
+// Detectar qué comando Python está disponible
+function encontrarPython() {
+  const posibles = ['python', 'python3', 'python.exe', 'python3.exe']
+  
+  for (const cmd of posibles) {
+    try {
+      execSync(`${cmd} --version`, { stdio: 'pipe', encoding: 'utf-8' })
+      console.log(`✓ Python encontrado: ${cmd}`)
+      return cmd
+    } catch (e) {
+      // Comando no disponible, probar el siguiente
+    }
+  }
+  
+  return null
+}
+
+const pythonCmd = encontrarPython()
+
 // Middleware
 app.use(express.json())
 app.use(express.static(path.join(__dirname, '..', 'public')))
@@ -48,11 +67,23 @@ app.post('/api/ficha-tecnica-cacao', (req, res) => {
         error: 'Las hectáreas deben ser un número mayor a 0' 
       })
     }
+
+    // Verificar si Python está disponible
+    if (!pythonCmd) {
+      return res.status(500).json({ 
+        error: 'Python no está instalado o no está en el PATH',
+        soluciones: [
+          '1. Instalar Python desde python.org',
+          '2. Marcar "Add Python to PATH" durante la instalación',
+          '3. Reiniciar la PC'
+        ]
+      })
+    }
     
     const projectRoot = path.join(__dirname, '..')
     
-    // Ejecutar como módulo Python desde la raíz del proyecto
-    const result = execSync(`python -m calculadoras.cacao_convencional.ejecutar ${hectareas}`, {
+    // Ejecutar como módulo Python
+    const result = execSync(`${pythonCmd} -m calculadoras.cacao_convencional.ejecutar ${hectareas}`, {
       cwd: projectRoot,
       encoding: 'utf-8',
       stdio: 'pipe'
@@ -70,14 +101,19 @@ app.post('/api/ficha-tecnica-cacao', (req, res) => {
     
     res.json(fichaData)
   } catch (error: any) {
-    console.error('Error ejecutando calculadora:')
+    console.error('❌ Error ejecutando calculadora:')
     console.error('  Mensaje:', error.message)
     if (error.stdout) console.error('  Stdout:', error.stdout.toString())
     if (error.stderr) console.error('  Stderr:', error.stderr.toString())
     
     res.status(500).json({ 
       error: 'Error al ejecutar calculadora',
-      details: error.message 
+      details: error.message,
+      soluciones: [
+        '✓ Si Python no está en PATH: Instálalo con "Add to PATH" habilitado',
+        '✓ Si falta el módulo calculadoras: Verifica que exista la carpeta calculadoras/',
+        '✓ Reinicia el servidor después de instalar Python'
+      ]
     })
   }
 })
