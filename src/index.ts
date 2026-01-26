@@ -96,7 +96,7 @@ app.get('/api/todos-cultivos', async (req, res) => {
 // Calcular ficha técnica de cacao
 app.post('/api/ficha-tecnica-cacao', async (req, res) => {
   try {
-    const { hectareas = 1.0, categoria_id = 'PEREN_SEMI', cultivo_id = 1 } = req.body
+    const { hectareas = 1.0, categoria_id = 'PEREN_SEMI', cultivo_id = 1, sensibilizado = true } = req.body
     
     if (typeof hectareas !== 'number' || hectareas <= 0) {
       return res.status(400).json({ error: 'Hectáreas inválidas' })
@@ -107,7 +107,8 @@ app.post('/api/ficha-tecnica-cacao', async (req, res) => {
     }
     
     const projectRoot = path.join(__dirname, '..')
-    const result = execSync(`${pythonCmd} -m calculadoras.cacao_convencional.ejecutar ${hectareas}`, {
+    const sensibilizadoParam = sensibilizado ? 'true' : 'false'
+    const result = execSync(`${pythonCmd} -m calculadoras.cacao_convencional.ejecutar ${hectareas} ${sensibilizadoParam}`, {
       cwd: projectRoot,
       encoding: 'utf-8',
       stdio: 'pipe'

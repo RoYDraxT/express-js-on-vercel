@@ -64,6 +64,17 @@
               />
             </div>
 
+            <div class="form-item">
+              <label for="sensibilizado">Modo</label>
+              <div class="toggle-container">
+                <label class="toggle-switch">
+                  <input type="checkbox" id="sensibilizado" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-label">Sensibilizado</span>
+              </div>
+            </div>
+
             <button class="btn-calcular" onclick="calcularFichaTecnica()">
               Calcular
             </button>
@@ -73,6 +84,13 @@
           <div class="loading" id="loading">
             <div class="spinner"></div>
             <div>Calculando ficha técnica...</div>
+          </div>
+          
+          <!-- Botón de comparación (aparece después de calcular) -->
+          <div class="comparacion-container" id="comparacionContainer" style="display: none;">
+            <button class="btn-comparar" onclick="mostrarComparacion()">
+              Ver Comparación Sensibilizado vs No Sensibilizado
+            </button>
           </div>
         </div>
 
@@ -163,6 +181,14 @@
         cargarCategorias();
         cargarCultivos();
         
+        // Toggle label update
+        const toggleCheckbox = document.getElementById('sensibilizado');
+        const toggleLabel = document.getElementById('toggle-label');
+        
+        toggleCheckbox.addEventListener('change', function() {
+          toggleLabel.textContent = this.checked ? 'Sensibilizado' : 'No Sensibilizado';
+        });
+        
         document.getElementById('cultivo').addEventListener('change', function() {
           const selectedOption = this.options[this.selectedIndex];
           const categoriaId = selectedOption.dataset.categoriaId;
@@ -197,6 +223,7 @@
         const hectareas = parseFloat(document.getElementById('hectareas').value);
         const categoria_id = document.getElementById('categoria').value;
         const cultivo_id = document.getElementById('cultivo').value;
+        const sensibilizado = document.getElementById('sensibilizado').checked;
         const btnCalcular = document.querySelector('.btn-calcular');
         const loading = document.getElementById('loading');
         const mensajeError = document.getElementById('mensajeError');
@@ -237,7 +264,7 @@
           const response = await fetch('/api/ficha-tecnica-cacao', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ hectareas, categoria_id, cultivo_id: parseInt(cultivo_id) })
+            body: JSON.stringify({ hectareas, categoria_id, cultivo_id: parseInt(cultivo_id), sensibilizado })
           });
 
           const data = await response.json();
@@ -262,31 +289,62 @@
         const datos = ficha.datos_proyecto;
         const analisis = ficha.analisis_financiero;
         const produccion = ficha.produccion_promedio;
+        const instalacion = ficha.instalacion;
+        const modoSensibilizado = ficha.modo_sensibilizado;
 
         // Sector 1: Parámetros
         llenarSector('sector-parametros', fichaId, [
+          { label: 'Modo de Cálculo', valor: modoSensibilizado ? 'Sensibilizado ✓' : 'No Sensibilizado', clase: 'valor-modo' },
           { label: 'Hectáreas', valor: datos.hectareas },
           { label: 'Variedad', valor: datos.variedad },
-          { label: 'Ciclo Productivo', valor: datos.ciclo_productivo_años + ' años' }
+          { label: 'Región', valor: datos.region },
+          { label: 'Ciclo Productivo', valor: datos.ciclo_productivo_años + ' años' },
+          { label: 'Años Desarrollo', valor: datos.años_desarrollo + ' años' },
+          { label: 'Años Productivos', valor: datos.años_productivos + ' años' }
         ]);
 
         // Sector 2: Producción
         llenarSector('sector-produccion', fichaId, [
           { label: 'Producción (qq)', valor: produccion.produccion_qq, clase: 'valor-cantidad' },
-          { label: 'Ingresos', valor: '$' + formatNumber(produccion.ingresos), clase: 'valor-dinero' }
+          { label: 'Producción por ha (qq)', valor: produccion.produccion_qq_por_ha, clase: 'valor-cantidad' },
+          { label: 'Precio Venta (S/.)', valor: 'S/. ' + formatNumber(produccion.precio_venta_qq), clase: 'valor-dinero' },
+          { label: 'Ingresos Anuales', valor: 'S/. ' + formatNumber(produccion.ingresos), clase: 'valor-dinero' },
+          { label: 'Margen de Utilidad', valor: produccion.margen_utilidad_pct + '%', clase: 'valor-porcentaje' }
         ]);
 
         // Sector 3: Costos de Producción
         llenarSector('sector-costos-produccion', fichaId, [
-          { label: 'Costos', valor: '$' + formatNumber(produccion.costos), clase: 'valor-dinero' },
-          { label: 'Utilidad', valor: '$' + formatNumber(produccion.utilidad), clase: 'valor-dinero' }
+          { label: 'Costos Anuales', valor: 'S/. ' + formatNumber(produccion.costos), clase: 'valor-dinero' },
+          { label: 'Utilidad Anual', valor: 'S/. ' + formatNumber(produccion.utilidad), clase: 'valor-dinero' },
+          { label: 'Utilidad 15 años', valor: 'S/. ' + formatNumber(analisis.utilidad_neta_15años), clase: 'valor-dinero' },
+          { label: 'ROI Anual', valor: analisis.roi_anual_porcentaje + '%', clase: 'valor-porcentaje' },
+          { label: 'ROI 15 años', valor: analisis.roi_15años_porcentaje + '%', clase: 'valor-porcentaje' },
+          { label: 'Punto Equilibrio', valor: analisis.punto_equilibrio_años + ' años', clase: 'valor-tiempo' }
         ]);
 
         // Sector 4: Costos de Instalación
-        llenarSector('sector-costos-instalacion', fichaId, [
-          { label: 'Costo Total', valor: '$' + formatNumber(ficha.instalacion.costo_total), clase: 'valor-dinero' },
-          { label: 'Costo por Hectárea', valor: '$' + formatNumber(ficha.instalacion.costo_por_hectarea), clase: 'valor-dinero' }
-        ]);
+        const desgloseInstalacion = [
+          { label: 'Costo Total', valor: 'S/. ' + formatNumber(instalacion.costo_total), clase: 'valor-dinero' },
+          { label: 'Costo por Hectárea', valor: 'S/. ' + formatNumber(instalacion.costo_por_hectarea), clase: 'valor-dinero' }
+        ];
+        
+        if (instalacion.desglose && instalacion.desglose.costo_base) {
+          desgloseInstalacion.push(
+            { label: 'Costo Base', valor: 'S/. ' + formatNumber(instalacion.desglose.costo_base), clase: 'valor-dinero-sec' }
+          );
+          if (instalacion.desglose.sensibilizacion > 0) {
+            desgloseInstalacion.push(
+              { label: 'Sensibilización (+4.5%)', valor: 'S/. ' + formatNumber(instalacion.desglose.sensibilizacion), clase: 'valor-dinero-sec' }
+            );
+          }
+        }
+        
+        desgloseInstalacion.push(
+          { label: 'VAN (10%)', valor: 'S/. ' + formatNumber(analisis.van_tasa_10_pct), clase: 'valor-dinero' },
+          { label: 'TIR', valor: analisis.tir_porcentaje + '%', clase: 'valor-porcentaje' }
+        );
+        
+        llenarSector('sector-costos-instalacion', fichaId, desgloseInstalacion);
 
         // Hacer visibles todos los sectores
         document.querySelectorAll('.sector').forEach(sector => {

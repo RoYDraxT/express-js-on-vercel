@@ -5,14 +5,17 @@ import json
 
 def main():
     try:
-        # Obtener hectáreas del argumento
+        # Obtener parámetros de los argumentos
         hectareas = float(sys.argv[1]) if len(sys.argv) > 1 else 1.0
+        # Nuevo parámetro: sensibilizado (true/false)
+        sensibilizado_str = sys.argv[2].lower() if len(sys.argv) > 2 else 'true'
+        sensibilizado = sensibilizado_str in ['true', '1', 'yes', 's', 'si']
         
         # Importar calculadora (ahora con imports relativos que funcionan)
         from .calculadora_cacao_convencional import CalculadoraCacaoConvencional
         
         # Crear instancia y generar ficha
-        calc = CalculadoraCacaoConvencional(hectareas=hectareas)
+        calc = CalculadoraCacaoConvencional(hectareas=hectareas, sensibilizado=sensibilizado)
         ficha = calc.generar_ficha_tecnica()
         
         # Retornar JSON
