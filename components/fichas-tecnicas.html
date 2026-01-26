@@ -5,6 +5,7 @@
     <title>Fichas Técnicas - EcoModel</title>
     <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/fichas-tecnicas.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   </head>
   <body>
     <div class="container">
@@ -64,17 +65,6 @@
               />
             </div>
 
-            <div class="form-item">
-              <label for="sensibilizado">Modo</label>
-              <div class="toggle-container">
-                <label class="toggle-switch">
-                  <input type="checkbox" id="sensibilizado" checked>
-                  <span class="toggle-slider"></span>
-                </label>
-                <span class="toggle-label" id="toggle-label">Sensibilizado</span>
-              </div>
-            </div>
-
             <button class="btn-calcular" onclick="calcularFichaTecnica()">
               Calcular
             </button>
@@ -96,27 +86,321 @@
 
         <!-- 4 SECTORES OCULTOS -->
         <div class="sectores-container">
-          <!-- Sector 1: Parámetros -->
+          <!-- Sector 1: DASHBOARD PARAMETROS Y PRODUCCIÓN -->
           <div class="sector oculto" id="sector-parametros" data-ficha-id="">
-            <h3>Parámetros</h3>
-            <div class="sector-contenido">
-              <!-- Será llenado con JavaScript -->
+            <h3>Parámetros y Producción - Cacao Convencional</h3>
+            
+            <div class="dashboard-container">
+              <!-- Columna Izquierda: Información General -->
+              <div class="dashboard-col info-general">
+                <div class="info-section">
+                  <h4>INFORMACIÓN GENERAL</h4>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <span class="info-label">Frecuencia de Venta:</span>
+                      <span class="info-value" id="frecuencia-venta">Por Campaña</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Ciclo Productivo:</span>
+                      <span class="info-value" id="ciclo-productivo">1 vez al año (1 Siembra = 1 Cosecha)</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Tipo de Producción:</span>
+                      <span class="info-value" id="tipo-produccion">Campo abierto</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Fuente de Riego:</span>
+                      <span class="info-value" id="fuente-riego">Canales de riego y de lluvias</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Periodo Vegetativo:</span>
+                      <span class="info-value" id="periodo-vegetativo">15 Años</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Periodo Post Cosecha:</span>
+                      <span class="info-value" id="periodo-postcosecha">1 mes</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Distanciamiento:</span>
+                      <span class="info-value" id="distanciamiento">3.0m x 3.0m</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Meses Mantenimiento:</span>
+                      <span class="info-value" id="meses-mantenimiento">Dic/Ene - Abr/Jul</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Meses Comercialización:</span>
+                      <span class="info-value" id="meses-comercializacion">Abr/Jul</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Variedad:</span>
+                      <span class="info-value" id="variedad">CCN 51 (Híbrido)</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Provincias:</span>
+                      <span class="info-value" id="provincias">La Convención, Calca</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="info-label">Forma Comercialización:</span>
+                      <span class="info-value" id="forma-comercializacion">Grano seco</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="info-section extensión-section">
+                  <div class="extension-box">
+                    <span class="extension-label">EXTENSIÓN (HAS)</span>
+                    <span class="extension-value" id="extension-has">1.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Columna Centro: Productividad y Parámetros -->
+              <div class="dashboard-col productividad-col">
+                <!-- Tabla de Productividad -->
+                <div class="tabla-productividad">
+                  <h4>PRODUCTIVIDAD POR AÑOS</h4>
+                  <table class="tabla-prod">
+                    <thead>
+                      <tr>
+                        <th>Período</th>
+                        <th>QQ</th>
+                        <th>Rendim</th>
+                        <th>1RA</th>
+                        <th>2DA</th>
+                        <th>3RA</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabla-productividad-body">
+                      <!-- Se llenará dinámicamente -->
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Parámetros Productivos -->
+                <div class="parametros-productivos">
+                  <h4>PARÁMETROS PRODUCTIVOS</h4>
+                  <div class="param-grid">
+                    <div class="param-item">
+                      <span class="param-label">Número Total de Plantones:</span>
+                      <span class="param-value" id="num-plantones">1,111</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="param-label">Producción por Árbol (QQ/año):</span>
+                      <span class="param-value" id="prod-arbol">0.03</span>
+                    </div>
+                    <div class="param-item">
+                      <span class="param-label">Merma Productiva:</span>
+                      <span class="param-value" id="merma-productiva">2%</span>
+                    </div>
+                    <div class="param-item destacado">
+                      <span class="param-label">Producción Total Anual (QQ):</span>
+                      <span class="param-value" id="prod-total-anual">26.2</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Producto Cosechado -->
+                <div class="producto-cosechado">
+                  <h4>PRODUCTO COSECHADO</h4>
+                  <table class="tabla-cosecha">
+                    <thead>
+                      <tr>
+                        <th>Calidad</th>
+                        <th>Rendimiento (QQ)</th>
+                        <th>Precio Venta (S/.)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tabla-cosecha-body">
+                      <!-- Se llenará dinámicamente -->
+                    </tbody>
+                    <tfoot>
+                      <tr class="total-row">
+                        <td><strong>Promedio</strong></td>
+                        <td id="rendimiento-promedio"><strong>26.2</strong></td>
+                        <td id="precio-promedio"><strong>440.00</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+
+              <!-- Columna Derecha: Gráfico y Costos -->
+              <div class="dashboard-col grafico-col">
+                <!-- Gráfico Evolutivo -->
+                <div class="grafico-container">
+                  <h4>Evolutivo de Costos y Ventas (S/.)</h4>
+                  <canvas id="graficoEvolutivo"></canvas>
+                  <div class="leyenda-grafico">
+                    <div class="leyenda-item">
+                      <span class="leyenda-color" style="background: #ef4444;"></span>
+                      <span>Costos Programados (Sensibilizado)</span>
+                    </div>
+                    <div class="leyenda-item">
+                      <span class="leyenda-color" style="background: #22c55e;"></span>
+                      <span>Ventas Programadas</span>
+                    </div>
+                  </div>
+                  <div class="nota-sensibilizado">
+                    <p>Los costos de producción se calculan con el ajuste (sensibilizado)</p>
+                    <p class="nota-verde">La columna verde engloba el total de ganancia de Abr/Jul</p>
+                  </div>
+                </div>
+
+                <!-- Costos Sensibilizados/No Sensibilizados -->
+                <div class="costos-sensibilizados">
+                  <div class="costos-header">
+                    <h4 id="costos-titulo">COSTOS SENSIBILIZADOS</h4>
+                    <div class="costos-toggle">
+                      <span class="costos-opcion" id="costosNoSensibilizado">No Sens.</span>
+                      <label class="toggle-switch">
+                        <input type="checkbox" id="sensibilizado" checked onchange="cambiarModoSensibilizado()">
+                        <span class="toggle-slider"></span>
+                      </label>
+                      <span class="costos-opcion" id="costosSensibilizado">Sens.</span>
+                    </div>
+                  </div>
+                  <div class="costos-grid">
+                    <div class="costo-item">
+                      <span class="costo-label">Costo Técnico:</span>
+                      <span class="costo-value" id="costo-tecnico">S/. 5,551</span>
+                    </div>
+                    <div class="costo-item">
+                      <span class="costo-label">Costos Asumidos por Productor:</span>
+                      <span class="costo-value" id="costos-asumidos">S/. 680</span>
+                    </div>
+                    <div class="costo-item" id="costo-item-principal">
+                      <span class="costo-label">Costos Sensibilizados:</span>
+                      <span class="costo-value destaca" id="costos-sensibilizados">S/. 4,871</span>
+                    </div>
+                    <div class="costo-item">
+                      <span class="costo-label">Utilidad Sensibilizada:</span>
+                      <span class="costo-value utilidad" id="utilidad-sensibilizada">S/. 6,644</span>
+                    </div>
+                    <div class="costo-item">
+                      <span class="costo-label">Costo de Prod. Sensibilizado:</span>
+                      <span class="costo-value porcentaje" id="costo-prod-porcentaje">42.30%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <!-- Sector 2: Producción -->
-          <div class="sector oculto" id="sector-produccion" data-ficha-id="">
+          <!-- Sector 2: Producción (DEPRECADO - ahora integrado en Parámetros) -->
+          <div class="sector oculto" id="sector-produccion" data-ficha-id="" style="display: none;">
             <h3>Producción</h3>
             <div class="sector-contenido">
               <!-- Será llenado con JavaScript -->
             </div>
           </div>
 
-          <!-- Sector 3: Costos de Producción -->
+          <!-- Sector 3: Costos de Producción Detallado -->
           <div class="sector oculto" id="sector-costos-produccion" data-ficha-id="">
-            <h3>Costos de Producción</h3>
-            <div class="sector-contenido">
-              <!-- Será llenado con JavaScript -->
+            <div class="sector-header-with-info">
+              <h3>Detalle del Costo de Producción y Cronograma de Ejecución</h3>
+              <div class="info-icon-wrapper">
+                <span class="info-icon" id="info-costos-btn">ℹ</span>
+                <div class="info-tooltip" id="info-costos-tooltip">
+                  <p><strong>COSTO TOTAL:</strong> Costo total por hectárea</p>
+                  <p><strong>PRECIO UNITARIO:</strong> Precio de la unidad de medida</p>
+                  <p><strong>CANTIDAD POR HAS:</strong> Cantidad de unidades por hectárea</p>
+                  <p><strong>UD MEDIDA:</strong> Unidad de medida (Jornal, Día, Saco, Litro, etc.)</p>
+                  <p style="margin-top: 10px;"><strong>Meses (Ago-Jul):</strong> Distribución mensual del costo</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="costos-produccion-container">
+              <!-- Tabla Principal de Costos -->
+              <div class="tabla-costos-wrapper">
+                <table class="tabla-costos-produccion">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Concepto</th>
+                      <th class="precio-header">Costo Total</th>
+                      <th class="precio-unitario-header">Precio Unit.</th>
+                      <th class="cantidad-header">Cant./Has</th>
+                      <th class="unidad-header">UD Medida</th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-costos-directos">
+                    <!-- Se llenará dinámicamente -->
+                  </tbody>
+                  <tfoot>
+                    <tr class="total-directos-row">
+                      <td colspan="5"><strong>TOTAL COSTO DIRECTO</strong></td>
+                      <td id="total-ago">257</td>
+                      <td id="total-sep">693</td>
+                      <td id="total-oct">1,156</td>
+                      <td id="total-nov">1,037</td>
+                      <td id="total-dic">188</td>
+                      <td id="total-ene">506</td>
+                      <td id="total-feb">120</td>
+                      <td id="total-mar">188</td>
+                      <td id="total-abr">240</td>
+                      <td id="total-may">1,120</td>
+                      <td id="total-jun">-</td>
+                      <td id="total-jul">-</td>
+                      <td id="total-directo"><strong>5,236</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+                
+                <!-- Costos Indirectos -->
+                <table class="tabla-costos-indirectos">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Concepto</th>
+                      <th class="precio-header">Costo Total</th>
+                      <th class="precio-unitario-header">Porcentaje</th>
+                      <th colspan="15"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-costos-indirectos">
+                    <!-- Se llenará dinámicamente -->
+                  </tbody>
+                  <tfoot>
+                    <tr class="total-indirectos-row">
+                      <td colspan="2"><strong>TOTAL COSTO INDIRECTO</strong></td>
+                      <td colspan="16"><strong id="total-indirecto">314</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+                
+                <!-- Resumen Final -->
+                <div class="resumen-costos">
+                  <div class="resumen-item">
+                    <span class="resumen-label">TOTAL COSTOS DE PRODUCCIÓN (I + II):</span>
+                    <span class="resumen-value" id="total-costos-produccion">S/. 5,551</span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">GASTOS ASUMIDOS POR PRODUCTOR:</span>
+                    <span class="resumen-value" id="gastos-asumidos-productor">S/. 680</span>
+                  </div>
+                  <div class="resumen-item destacado">
+                    <span class="resumen-label">COSTOS PROGRAMADOS (Sensibilizado):</span>
+                    <span class="resumen-value" id="costos-programados-sensibilizado">S/. 4,871</span>
+                  </div>
+                  <div class="resumen-item ingresos">
+                    <span class="resumen-label">VENTAS PROGRAMADAS:</span>
+                    <span class="resumen-value" id="ventas-programadas">S/. 11,514</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -138,7 +422,7 @@
     <script>
       let allCultivos = [];
       let allCategorias = [];
-
+      let ultimaFicha = null; // Guardar la última ficha calculada      let datosOriginalesDashboard = null; // Para guardar los datos originales del dashboard
       // Cargar categorías al iniciar
       async function cargarCategorias() {
         try {
@@ -181,14 +465,6 @@
         cargarCategorias();
         cargarCultivos();
         
-        // Toggle label update
-        const toggleCheckbox = document.getElementById('sensibilizado');
-        const toggleLabel = document.getElementById('toggle-label');
-        
-        toggleCheckbox.addEventListener('change', function() {
-          toggleLabel.textContent = this.checked ? 'Sensibilizado' : 'No Sensibilizado';
-        });
-        
         document.getElementById('cultivo').addEventListener('change', function() {
           const selectedOption = this.options[this.selectedIndex];
           const categoriaId = selectedOption.dataset.categoriaId;
@@ -218,6 +494,68 @@
           }
         });
       });
+
+      function cambiarModoSensibilizado() {
+        if (!ultimaFicha || !datosOriginalesDashboard) return;
+        
+        const sensibilizado = document.getElementById('sensibilizado').checked;
+        const costosTitulo = document.getElementById('costos-titulo');
+        const costosNoSensibilizadoSpan = document.getElementById('costosNoSensibilizado');
+        const costosSensibilizadoSpan = document.getElementById('costosSensibilizado');
+        
+        // Actualizar título del cuadro
+        costosTitulo.textContent = sensibilizado ? 'COSTOS SENSIBILIZADOS' : 'COSTOS NO SENSIBILIZADOS';
+        
+        // Actualizar estilos de las opciones del toggle
+        if (sensibilizado) {
+          costosSensibilizadoSpan.classList.add('activo');
+          costosNoSensibilizadoSpan.classList.remove('activo');
+        } else {
+          costosNoSensibilizadoSpan.classList.add('activo');
+          costosSensibilizadoSpan.classList.remove('activo');
+        }
+        
+        // Obtener los datos alternativos para costos
+        const datosAMostrar = sensibilizado 
+          ? ultimaFicha.calculos_alternativos.sensibilizado 
+          : ultimaFicha.calculos_alternativos.no_sensibilizado;
+        
+        // Actualizar SOLO el cuadro de costos
+        actualizarCuadroCostos(datosAMostrar, sensibilizado);
+        
+        // Actualizar tabla de costos de producción detallado
+        llenarTablaCostosProduccion(ultimaFicha, sensibilizado);
+      }
+      
+      function actualizarCuadroCostos(ficha, sensibilizado) {
+        const ingresoAnual = ficha.produccion_promedio.ingresos || 11514;
+        const costoAnual = ficha.produccion_promedio.costos || 5551;
+        const utilidadAnual = ficha.produccion_promedio.utilidad || 6644;
+        
+        const costoTecnico = costoAnual;
+        const hectareasFicha = (ficha.datos_proyecto && ficha.datos_proyecto.hectareas) ? ficha.datos_proyecto.hectareas : 1;
+        const costosAsumidos = (ficha.costos_produccion_detallado && ficha.costos_produccion_detallado.gastos_asumidos_productor)
+          ? ficha.costos_produccion_detallado.gastos_asumidos_productor
+          : 680.00 * hectareasFicha;
+        const costosSensibilizados = costoAnual - costosAsumidos;
+        const utilidadSensibilizada = utilidadAnual;
+        const costoProdPorcentaje = (costosSensibilizados / ingresoAnual * 100).toFixed(2);
+        
+        // Actualizar valores del cuadro de costos
+        document.getElementById('costo-tecnico').textContent = 'S/. ' + formatNumber(costoTecnico.toFixed(2));
+        document.getElementById('costos-asumidos').textContent = 'S/. ' + formatNumber(costosAsumidos.toFixed(2));
+        document.getElementById('costos-sensibilizados').textContent = 'S/. ' + formatNumber(costosSensibilizados.toFixed(2));
+        document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidadSensibilizada.toFixed(2));
+        document.getElementById('costo-prod-porcentaje').textContent = costoProdPorcentaje + '%';
+        
+        // Cambiar el label del costo principal según el modo
+        const costoItemPrincipal = document.getElementById('costo-item-principal');
+        const labelPrincipal = costoItemPrincipal.querySelector('.costo-label');
+        labelPrincipal.textContent = sensibilizado ? 'Costos Sensibilizados:' : 'Costos No Sensibilizados:';
+      }
+      
+      // Esta función ya no se usa porque solo el cuadro de costos cambia
+      // Se mantiene por compatibilidad pero no hace mucho
 
       async function calcularFichaTecnica() {
         const hectareas = parseFloat(document.getElementById('hectareas').value);
@@ -273,7 +611,21 @@
             throw new Error(data.error || 'Error desconocido');
           }
 
+          // Guardar la ficha para poder cambiar el modo después
+          ultimaFicha = data;
+          datosOriginalesDashboard = {
+            produccion_promedio: data.produccion_promedio,
+            datos_proyecto: data.datos_proyecto
+          };
           mostrarSectores(data);
+          
+          // Mostrar los sectores
+          mostrarSectores(data);
+          
+          // Actualizar el toggle de costos
+          const toggleCheckbox = document.getElementById('sensibilizado');
+          toggleCheckbox.checked = data.modo_sensibilizado;
+          
         } catch (error) {
           mensajeError.textContent = 'Error: ' + error.message;
           mensajeError.classList.add('activo');
@@ -284,6 +636,107 @@
         }
       }
 
+      function llenarTablaCostosProduccion(ficha, sensibilizado) {
+        if (!ficha.costos_produccion_detallado) return;
+        
+        const costos = ficha.costos_produccion_detallado;
+        const hectareas = ficha.datos_proyecto.hectareas;
+        const meses = ['ago', 'sep', 'oct', 'nov', 'dic', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul'];
+        
+        // Tabla de costos directos con subcategorías
+        const tablaCostosDirectos = document.getElementById('tabla-costos-directos');
+        let htmlDirectos = '';
+        let totalesPorMes = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
+        let totalDirectoGlobal = 0;
+        
+        // Generar filas por categoría
+        costos.costos_directos.forEach((categoria, catIdx) => {
+          // Fila de categoría header
+          const subtotalCategoria = categoria.subtotal;
+          totalDirectoGlobal += subtotalCategoria;
+          
+          htmlDirectos += `<tr class="categoria-header-row" style="background-color: #fff59e;">
+            <td colspan="5"><strong>${categoria.categoria}</strong></td>
+            <td colspan="13"></td>
+          </tr>`;
+          
+          // Filas de items
+          categoria.items.forEach((item, itemIdx) => {
+            const costoTotal = item.costo_total;
+            let fila = `<tr class="item-row">
+              <td>${item.nombre}</td>
+              <td>${formatNumber(costoTotal)}</td>
+              <td>${formatNumber(item.precio_unitario)}</td>
+              <td>${item.cantidad.toFixed(2)}</td>
+              <td>${item.ud}</td>`;
+            
+            meses.forEach(mes => {
+              const costoMes = (item.meses[mes] || 0);
+              totalesPorMes[mes] += costoMes;
+              fila += `<td>${costoMes > 0 ? formatNumber(costoMes) : '-'}</td>`;
+            });
+            
+            fila += `<td>${formatNumber(costoTotal)}</td></tr>`;
+            htmlDirectos += fila;
+          });
+          
+          // Fila de subtotal por categoría
+          let subtotalMeses = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
+          categoria.items.forEach(item => {
+            meses.forEach(mes => {
+              subtotalMeses[mes] += (item.meses[mes] || 0);
+            });
+          });
+          
+          htmlDirectos += `<tr class="espacio-blanco"><td colspan="18"></td></tr>`;
+        });
+        
+        tablaCostosDirectos.innerHTML = htmlDirectos;
+        
+        // Actualizar totales del pie de tabla
+        meses.forEach(mes => {
+          const elem = document.getElementById(`total-${mes}`);
+          if (elem) {
+            elem.textContent = totalesPorMes[mes] > 0 ? formatNumber(totalesPorMes[mes]) : '-';
+          }
+        });
+        document.getElementById('total-directo').innerHTML = '<strong>' + formatNumber(totalDirectoGlobal) + '</strong>';
+        
+        // Tabla de costos indirectos
+        const tablaCostosIndirectos = document.getElementById('tabla-costos-indirectos');
+        let htmlIndirectos = '';
+        let totalIndirectoGlobal = 0;
+        
+        costos.costos_indirectos.forEach(item => {
+          const costoIndirecto = item.costo;
+          totalIndirectoGlobal += costoIndirecto;
+          
+          let fila = `<tr>
+            <td>${item.nombre}</td>
+            <td>${formatNumber(costoIndirecto)}</td>
+            <td>${item.porcentaje.toFixed(2)}%</td>
+            <td colspan="15"></td>`;
+          
+          htmlIndirectos += fila;
+        });
+        
+        tablaCostosIndirectos.innerHTML = htmlIndirectos;
+        document.getElementById('total-indirecto').textContent = formatNumber(totalIndirectoGlobal);
+        
+        // Actualizar resumen
+        const totalCostosProduccion = totalDirectoGlobal + totalIndirectoGlobal;
+        const gastosAsumidos = (costos.gastos_asumidos_productor !== undefined)
+          ? costos.gastos_asumidos_productor
+          : 680.00 * hectareas;
+        const costosSensibilizados = sensibilizado ? (totalCostosProduccion - gastosAsumidos) : totalCostosProduccion;
+        const ingresosMensuales = (ficha.produccion_promedio.ingresos || 11514);
+        
+        document.getElementById('total-costos-produccion').textContent = 'S/. ' + formatNumber(totalCostosProduccion);
+        document.getElementById('gastos-asumidos-productor').textContent = 'S/. ' + formatNumber(gastosAsumidos);
+        document.getElementById('costos-programados-sensibilizado').textContent = 'S/. ' + formatNumber(costosSensibilizados);
+        document.getElementById('ventas-programadas').textContent = 'S/. ' + formatNumber(ingresosMensuales);
+      }
+
       function mostrarSectores(ficha) {
         const fichaId = ficha.id_ficha || 'temp-' + Date.now();
         const datos = ficha.datos_proyecto;
@@ -292,28 +745,15 @@
         const instalacion = ficha.instalacion;
         const modoSensibilizado = ficha.modo_sensibilizado;
 
-        // Sector 1: Parámetros
-        llenarSector('sector-parametros', fichaId, [
-          { label: 'Modo de Cálculo', valor: modoSensibilizado ? 'Sensibilizado ✓' : 'No Sensibilizado', clase: 'valor-modo' },
-          { label: 'Hectáreas', valor: datos.hectareas },
-          { label: 'Variedad', valor: datos.variedad },
-          { label: 'Región', valor: datos.region },
-          { label: 'Ciclo Productivo', valor: datos.ciclo_productivo_años + ' años' },
-          { label: 'Años Desarrollo', valor: datos.años_desarrollo + ' años' },
-          { label: 'Años Productivos', valor: datos.años_productivos + ' años' }
-        ]);
+        // ========= SECTOR 1: DASHBOARD PARÁMETROS Y PRODUCCIÓN =========
+        llenarDashboardParametros(datos, produccion, analisis, modoSensibilizado);
 
-        // Sector 2: Producción
-        llenarSector('sector-produccion', fichaId, [
-          { label: 'Producción (qq)', valor: produccion.produccion_qq, clase: 'valor-cantidad' },
-          { label: 'Producción por ha (qq)', valor: produccion.produccion_qq_por_ha, clase: 'valor-cantidad' },
-          { label: 'Precio Venta (S/.)', valor: 'S/. ' + formatNumber(produccion.precio_venta_qq), clase: 'valor-dinero' },
-          { label: 'Ingresos Anuales', valor: 'S/. ' + formatNumber(produccion.ingresos), clase: 'valor-dinero' },
-          { label: 'Margen de Utilidad', valor: produccion.margen_utilidad_pct + '%', clase: 'valor-porcentaje' }
-        ]);
+        // ========= SECTOR 2: COSTOS DE PRODUCCIÓN DETALLADO =========
+        llenarTablaCostosProduccion(ficha, modoSensibilizado);
 
-        // Sector 3: Costos de Producción
-        llenarSector('sector-costos-produccion', fichaId, [
+        // Sector 3: Costos de Instalación (removido del antiguo flujo)
+        // Sector 4: Gráficos y Análisis
+        llenarSector('sector-costos-instalacion', fichaId, [
           { label: 'Costos Anuales', valor: 'S/. ' + formatNumber(produccion.costos), clase: 'valor-dinero' },
           { label: 'Utilidad Anual', valor: 'S/. ' + formatNumber(produccion.utilidad), clase: 'valor-dinero' },
           { label: 'Utilidad 15 años', valor: 'S/. ' + formatNumber(analisis.utilidad_neta_15años), clase: 'valor-dinero' },
@@ -348,9 +788,218 @@
 
         // Hacer visibles todos los sectores
         document.querySelectorAll('.sector').forEach(sector => {
-          sector.classList.remove('oculto');
-          sector.classList.add('visible');
-          sector.dataset.fichaId = fichaId;
+          if (sector.id !== 'sector-produccion') { // Omitir el sector de producción deprecado
+            sector.classList.remove('oculto');
+            sector.classList.add('visible');
+            sector.dataset.fichaId = fichaId;
+          }
+        });
+        
+        // Inicializar el toggle de costos
+        const toggleCheckbox = document.getElementById('sensibilizado');
+        const costosSensibilizadoSpan = document.getElementById('costosSensibilizado');
+        const costosNoSensibilizadoSpan = document.getElementById('costosNoSensibilizado');
+        
+        if (modoSensibilizado) {
+          costosSensibilizadoSpan.classList.add('activo');
+          costosNoSensibilizadoSpan.classList.remove('activo');
+        } else {
+          costosNoSensibilizadoSpan.classList.add('activo');
+          costosSensibilizadoSpan.classList.remove('activo');
+        }
+      }
+
+      function llenarDashboardParametros(datos, produccion, analisis, modoSensibilizado) {
+        // Información General
+        document.getElementById('extension-has').textContent = datos.hectareas.toFixed(2);
+        document.getElementById('periodo-vegetativo').textContent = datos.ciclo_productivo_años + ' Años (Incluye ' + datos.años_desarrollo + ' años de desarrollo)';
+        document.getElementById('variedad').textContent = datos.variedad;
+        document.getElementById('provincias').textContent = datos.region;
+        
+        // Tabla de Productividad
+        const tablaProductividad = document.getElementById('tabla-productividad-body');
+        const productividad = [
+          { periodo: '1er-3er año', qq: 0, rendim: '0%', primera: '0%', segunda: '0%', tercera: '0%' },
+          { periodo: '4to-6to año', qq: 24.0, rendim: '80%', primera: '90%', segunda: '10%', tercera: '0%' },
+          { periodo: '7mo-9no año', qq: 27.0, rendim: '90%', primera: '90%', segunda: '10%', tercera: '0%' },
+          { periodo: '10mo-11vo año', qq: 30.0, rendim: '100%', primera: '95%', segunda: '5%', tercera: '0%' },
+          { periodo: '12vo-13vo año', qq: 28.5, rendim: '95%', primera: '80%', segunda: '20%', tercera: '0%' },
+          { periodo: '14vo-15vo año', qq: 24.0, rendim: '80%', primera: '75%', segunda: '25%', tercera: '0%' }
+        ];
+        
+        let htmlProductividad = '';
+        productividad.forEach((p, idx) => {
+          const rowClass = idx === 0 ? 'desarrollo-row' : '';
+          htmlProductividad += `
+            <tr class="${rowClass}">
+              <td>${p.periodo}</td>
+              <td>${p.qq}</td>
+              <td>${p.rendim}</td>
+              <td>${p.primera}</td>
+              <td>${p.segunda}</td>
+              <td>${p.tercera}</td>
+            </tr>
+          `;
+        });
+        
+        // Fila de promedios
+        htmlProductividad += `
+          <tr class="promedio-row">
+            <td><strong>PROMEDIOS</strong></td>
+            <td><strong>26.7</strong></td>
+            <td><strong>89%</strong></td>
+            <td><strong>86%</strong></td>
+            <td><strong>14%</strong></td>
+            <td><strong>0%</strong></td>
+          </tr>
+        `;
+        
+        tablaProductividad.innerHTML = htmlProductividad;
+        
+        // Parámetros Productivos
+        const numPlantones = (datos.hectareas * 1111).toFixed(0);
+        document.getElementById('num-plantones').textContent = formatNumber(numPlantones);
+        document.getElementById('prod-arbol').textContent = '0.03';
+        document.getElementById('merma-productiva').textContent = '2%';
+        document.getElementById('prod-total-anual').textContent = produccion.produccion_qq_por_ha ? produccion.produccion_qq_por_ha.toFixed(1) : '26.2';
+        
+        // Producto Cosechado
+        const tablaCosecha = document.getElementById('tabla-cosecha-body');
+        const productosCosechados = [
+          { calidad: '1RA', rendimiento: 22.5 * datos.hectareas, precio: 480.00 },
+          { calidad: '2DA', rendimiento: 3.7 * datos.hectareas, precio: 400.00 }
+        ];
+        
+        let htmlCosecha = '';
+        productosCosechados.forEach(p => {
+          htmlCosecha += `
+            <tr>
+              <td>${p.calidad}</td>
+              <td>${p.rendimiento.toFixed(1)}</td>
+              <td>${formatNumber(p.precio)}</td>
+            </tr>
+          `;
+        });
+        tablaCosecha.innerHTML = htmlCosecha;
+        
+        document.getElementById('rendimiento-promedio').innerHTML = '<strong>' + (produccion.produccion_qq || 26.2).toFixed(1) + '</strong>';
+        document.getElementById('precio-promedio').innerHTML = '<strong>' + formatNumber(produccion.precio_venta_qq || 440) + '</strong>';
+        
+        // ===== COSTOS SENSIBILIZADOS =====
+        // IMPORTANTE: Estos valores YA ESTÁN sensibilizados en los datos y NO cambian con el toggle
+        // Solo varían si se recalcula con diferentes hectáreas
+        
+        const ingresoAnual = produccion.ingresos || 11514;
+        const costoAnual = produccion.costos || 5551;
+        const utilidadAnual = produccion.utilidad || 6644;
+        
+        // Estos son los valores fijos sensibilizados que NO cambiarán con el toggle
+        const costoTecnico = 5550.50; // Ya sensibilizado
+        const costosAsumidos = 680.00; // Valor fijo
+        const costosSensibilizados = costoTecnico - costosAsumidos; // 4,871
+        const utilidadSensibilizada = utilidadAnual; // Ya sensibilizada
+        const costoProdPorcentaje = (costosSensibilizados / ingresoAnual * 100).toFixed(2);
+        
+        // Mostrar los valores FIJOS de costos sensibilizados (NO cambian con el toggle)
+        document.getElementById('costo-tecnico').textContent = 'S/. ' + formatNumber(costoTecnico.toFixed(2));
+        document.getElementById('costos-asumidos').textContent = 'S/. ' + formatNumber(costosAsumidos.toFixed(2));
+        document.getElementById('costos-sensibilizados').textContent = 'S/. ' + formatNumber(costosSensibilizados.toFixed(2));
+        document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidadSensibilizada.toFixed(2));
+        document.getElementById('costo-prod-porcentaje').textContent = costoProdPorcentaje + '%';
+        
+        // Crear gráfico
+        crearGraficoEvolutivo(datos.hectareas, ingresoAnual);
+      }
+
+      let chartEvolutivo = null;
+      function crearGraficoEvolutivo(hectareas, ingresoAnual) {
+        const ctx = document.getElementById('graficoEvolutivo');
+        if (!ctx) return;
+        
+        // Destruir gráfico anterior si existe
+        if (chartEvolutivo) {
+          chartEvolutivo.destroy();
+        }
+        
+        // Datos mensuales (ejemplo basado en la imagen)
+        const meses = ['Ago', 'Sep', 'Oct', 'Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
+        
+        // Costos distribuidos (principalmente en primeros meses)
+        const costos = [
+          2240 * hectareas, // Ago
+          653 * hectareas,  // Sep
+          1636 * hectareas, // Oct
+          927 * hectareas,  // Nov
+          148 * hectareas,  // Dic
+          666 * hectareas,  // Ene
+          220 * hectareas,  // Feb
+          148 * hectareas,  // Mar
+          220 * hectareas,  // Abr
+          200 * hectareas,  // May
+          960 * hectareas,  // Jun
+          0                 // Jul
+        ];
+        
+        // Ingresos concentrados en meses de cosecha (Abr-Jul)
+        const ingresoMensual = ingresoAnual / 4; // Dividido en 4 meses
+        const ventas = [
+          0, 0, 0, 0, 0, 0, 0, 0, 
+          ingresoMensual, 
+          ingresoMensual, 
+          ingresoMensual, 
+          ingresoMensual
+        ];
+        
+        chartEvolutivo = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: meses,
+            datasets: [
+              {
+                label: 'Costos Programados',
+                data: costos,
+                backgroundColor: '#ef4444',
+                borderColor: '#dc2626',
+                borderWidth: 1
+              },
+              {
+                label: 'Ventas Programadas',
+                data: ventas,
+                backgroundColor: '#22c55e',
+                borderColor: '#16a34a',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return 'S/. ' + value.toLocaleString('es-PE');
+                  }
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.dataset.label + ': S/. ' + context.parsed.y.toLocaleString('es-PE', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    });
+                  }
+                }
+              }
+            }
+          }
         });
       }
 
@@ -378,6 +1027,22 @@
       document.getElementById('hectareas').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
           calcularFichaTecnica();
+        }
+      });
+
+      // Event listener para el ícono informativo de costos
+      document.addEventListener('click', function(e) {
+        if (e.target.id === 'info-costos-btn') {
+          const tooltip = document.getElementById('info-costos-tooltip');
+          tooltip.classList.toggle('activo');
+          e.stopPropagation();
+        } else if (e.target.closest('.info-tooltip')) {
+          // No cerrar si se hace clic dentro del tooltip
+          e.stopPropagation();
+        } else {
+          // Cerrar el tooltip si se hace clic fuera
+          const tooltip = document.getElementById('info-costos-tooltip');
+          if (tooltip) tooltip.classList.remove('activo');
         }
       });
     </script>

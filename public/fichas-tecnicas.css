@@ -11,7 +11,7 @@
 
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 200px auto;
+  grid-template-columns: 1fr 1fr 1fr auto;
   gap: 20px;
   align-items: flex-end;
 }
@@ -172,8 +172,8 @@
 
 /* Sectores Contenedor */
 .sectores-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   margin-top: 30px;
 }
@@ -184,6 +184,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-left: 4px solid #1ef5c6;
+  width: 100%;
 }
 
 .sector.oculto {
@@ -258,4 +259,753 @@
   color: #1ef5c6;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+/* Control de Modo */
+.control-modo {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  border: 2px solid #1ef5c6;
+}
+
+.modo-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.modo-header h3 {
+  color: #1e3c72;
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.modo-descripcion {
+  color: #666;
+  margin: 0;
+  font-size: 14px;
+}
+
+.modo-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.modo-opcion {
+  font-size: 16px;
+  font-weight: 600;
+  color: #999;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  text-align: center;
+}
+
+.modo-opcion.activo {
+  color: #1ef5c6;
+  font-size: 18px;
+  transform: scale(1.05);
+}
+
+.modo-toggle .toggle-switch {
+  width: 60px;
+  height: 30px;
+}
+
+.modo-toggle .toggle-slider:before {
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 4px;
+}
+
+.modo-toggle .toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(30px);
+}
+
+.modo-info {
+  text-align: center;
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(30, 245, 198, 0.1), rgba(74, 205, 212, 0.1));
+  border-radius: 6px;
+}
+
+.modo-activo {
+  color: #333;
+  font-size: 15px;
+}
+
+.modo-activo strong {
+  color: #1ef5c6;
+  font-size: 16px;
+}
+
+/* Botón Comparar */
+.comparacion-container {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.btn-comparar {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 14px;
+}
+
+.btn-comparar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* ========================================
+   DASHBOARD PARÁMETROS Y PRODUCCIÓN
+   ======================================== */
+
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 380px 1fr 450px;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.dashboard-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Columna Izquierda: Información General */
+.info-general {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.info-section h4 {
+  color: #1e3c72;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 15px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #1ef5c6;
+}
+
+.info-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-item {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 10px;
+  padding: 6px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.info-value {
+  color: #1e3c72;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.extensión-section {
+  margin-top: 20px;
+}
+
+.extension-box {
+  background: linear-gradient(135deg, #1ef5c6, #4acdd4);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(30, 245, 198, 0.3);
+}
+
+.extension-label {
+  display: block;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.extension-value {
+  display: block;
+  color: white;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Columna Centro: Productividad y Parámetros */
+.tabla-productividad,
+.parametros-productivos,
+.producto-cosechado {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.tabla-productividad h4,
+.parametros-productivos h4,
+.producto-cosechado h4 {
+  color: #1e3c72;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 12px 0;
+}
+
+.tabla-prod,
+.tabla-cosecha {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.tabla-prod thead th,
+.tabla-cosecha thead th {
+  background: #1e3c72;
+  color: white;
+  padding: 8px 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.tabla-prod tbody td,
+.tabla-cosecha tbody td {
+  padding: 6px;
+  text-align: center;
+  border-bottom: 1px solid #e5e7eb;
+  color: #333;
+}
+
+.tabla-prod tbody tr.desarrollo-row {
+  background: #fef3c7;
+}
+
+.tabla-prod tbody tr.promedio-row {
+  background: #dcfce7;
+  font-weight: 600;
+}
+
+.tabla-prod tbody tr.promedio-row td {
+  border-top: 2px solid #22c55e;
+}
+
+.tabla-cosecha tfoot tr.total-row {
+  background: #dbeafe;
+  font-weight: 600;
+}
+
+.tabla-cosecha tfoot td {
+  padding: 8px 6px;
+  border-top: 2px solid #3b82f6;
+}
+
+.param-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.param-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.param-item.destacado {
+  background: linear-gradient(135deg, rgba(30, 245, 198, 0.2), rgba(74, 205, 212, 0.2));
+  border-left: 3px solid #1ef5c6;
+}
+
+.param-label {
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.param-value {
+  color: #1e3c72;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Columna Derecha: Gráfico y Costos */
+.grafico-container {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.grafico-container h4 {
+  color: #1e3c72;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+#graficoEvolutivo {
+  max-height: 250px;
+  margin-bottom: 10px;
+}
+
+.leyenda-grafico {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.leyenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #666;
+}
+
+.leyenda-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+}
+
+.nota-sensibilizado {
+  background: #fef3c7;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.nota-sensibilizado p {
+  margin: 4px 0;
+  font-size: 11px;
+  color: #666;
+  text-align: center;
+}
+
+.nota-verde {
+  color: #16a34a !important;
+  font-weight: 600;
+}
+
+.costos-sensibilizados {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.costos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 20px;
+}
+
+.costos-header h4 {
+  color: #1e3c72;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin: 0;
+  flex: 1;
+}
+
+.costos-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8f9fa;
+  padding: 6px 10px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.costos-opcion {
+  font-size: 11px;
+  font-weight: 600;
+  color: #999;
+  transition: all 0.3s ease;
+  min-width: 60px;
+  text-align: center;
+}
+
+.costos-opcion.activo {
+  color: #1ef5c6;
+  font-size: 12px;
+}
+
+.costos-toggle .toggle-switch {
+  width: 45px;
+  height: 24px;
+}
+
+.costos-toggle .toggle-slider:before {
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+}
+
+.costos-toggle .toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(21px);
+}
+
+.costos-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.costo-item {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+  padding: 8px 10px;
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.costo-label {
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.costo-value {
+  color: #1e3c72;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.costo-value.destaca {
+  color: #f59e0b;
+}
+
+.costo-value.utilidad {
+  color: #22c55e;
+}
+
+.costo-value.porcentaje {
+  color: #ef4444;
+}
+
+/* Estilos para Tabla de Costos Producción */
+.sector-header-with-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sector-header-with-info h3 {
+  margin: 0;
+  flex: 1;
+}
+
+.info-icon-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0ea5e9;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.info-icon:hover {
+  background: #0284c7;
+  transform: scale(1.1);
+}
+
+.info-tooltip {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 40px;
+  background: white;
+  border: 2px solid #0ea5e9;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  font-size: 13px;
+  color: #333;
+}
+
+.info-tooltip.activo {
+  display: block;
+}
+
+.info-tooltip p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.info-tooltip p:last-child {
+  margin-bottom: 0;
+}
+
+.costos-produccion-container {
+  margin-top: 20px;
+}
+
+.tabla-costos-wrapper {
+  overflow-x: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.tabla-costos-produccion,
+.tabla-costos-indirectos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.tabla-costos-produccion th,
+.tabla-costos-produccion td,
+.tabla-costos-indirectos th,
+.tabla-costos-indirectos td {
+  padding: 10px 6px;
+  text-align: right;
+  border: 1px solid #e0e0e0;
+}
+
+.tabla-costos-produccion th.concepto-header,
+.tabla-costos-produccion td:first-child,
+.tabla-costos-indirectos th.concepto-header,
+.tabla-costos-indirectos td:first-child {
+  text-align: left;
+}
+
+.tabla-costos-produccion th.precio-header,
+.tabla-costos-produccion th.precio-unitario-header,
+.tabla-costos-produccion th.cantidad-header,
+.tabla-costos-produccion th.unidad-header,
+.tabla-costos-indirectos th.precio-header,
+.tabla-costos-indirectos th.precio-unitario-header {
+  text-align: center;
+  font-size: 12px;
+  background: #f0f9ff;
+}
+
+.tabla-costos-produccion thead th,
+.tabla-costos-indirectos thead th {
+  background: #f0f9ff;
+  font-weight: 600;
+  color: #0c4a6e;
+  border-color: #0ea5e9;
+  white-space: nowrap;
+}
+
+.tabla-costos-produccion tbody tr:hover,
+.tabla-costos-indirectos tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tabla-costos-produccion tfoot tr,
+.tabla-costos-indirectos tfoot tr {
+  background: #f0f9ff;
+  font-weight: 600;
+}
+
+.tabla-costos-produccion tbody tr.categoria-header {
+  background: #dbeafe;
+  font-weight: 600;
+  color: #0c4a6e;
+}
+
+.tabla-costos-produccion tbody tr.categoria-header-row {
+  background: #fff59e !important;
+  font-weight: 700 !important;
+}
+
+.tabla-costos-produccion tbody tr.item-row {
+  background: #fafafa;
+}
+
+.tabla-costos-produccion tbody tr.item-row:hover {
+  background: #f0f9ff !important;
+}
+
+.tabla-costos-produccion tbody tr.espacio-blanco {
+  height: 8px !important;
+  background: white !important;
+}
+
+.tabla-costos-produccion tbody tr.espacio-blanco td {
+  border: none !important;
+  padding: 2px !important;
+}
+
+.tabla-costos-produccion tbody tr.subcategoria {
+  background: #ffffff;
+}
+
+.tabla-costos-produccion tbody tr.subcategoria td:first-child {
+  padding-left: 30px;
+  color: #475569;
+}
+
+.tabla-costos-produccion tbody tr.subtotal {
+  background: #f0f9ff;
+  font-weight: 600;
+  color: #0c4a6e;
+}
+
+.tabla-costos-produccion tbody tr.subtotal td:first-child {
+  padding-left: 30px;
+}
+
+.total-directos-row,
+.total-indirectos-row {
+  background: #dbeafe;
+  font-weight: 700;
+  color: #0c4a6e;
+}
+
+/* Resumen de Costos */
+.resumen-costos {
+  background: #f0f9ff;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #0ea5e9;
+  margin-top: 20px;
+}
+
+.resumen-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e7ff;
+  font-size: 14px;
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+}
+
+.resumen-label {
+  font-weight: 600;
+  color: #334155;
+}
+
+.resumen-value {
+  font-weight: 700;
+  color: #0c4a6e;
+  font-size: 16px;
+}
+
+.resumen-item.destacado {
+  background: #fef08a;
+  padding: 14px;
+  margin: 10px -20px;
+  border-left: 4px solid #eab308;
+  border-bottom: none;
+}
+
+.resumen-item.destacado .resumen-label {
+  color: #713f12;
+}
+
+.resumen-item.destacado .resumen-value {
+  color: #b45309;
+}
+
+.resumen-item.ingresos {
+  background: #dcfce7;
+  padding: 14px;
+  margin: 10px -20px;
+  border-left: 4px solid #22c55e;
+  border-bottom: none;
+}
+
+.resumen-item.ingresos .resumen-label {
+  color: #166534;
+}
+
+.resumen-item.ingresos .resumen-value {
+  color: #16a34a;
+}
+
+/* Responsive para dashboard */
+@media (max-width: 1400px) {
+  .dashboard-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .tabla-costos-wrapper {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .tabla-costos-produccion,
+  .tabla-costos-indirectos {
+    font-size: 11px;
+  }
+  
+  .tabla-costos-produccion th,
+  .tabla-costos-produccion td,
+  .tabla-costos-indirectos th,
+  .tabla-costos-indirectos td {
+    padding: 8px 4px;
+  }
 }

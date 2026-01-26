@@ -167,6 +167,74 @@ class CalculadoraCacaoConvencional:
                 'utilidad': round(utilidad_anual, 2),
                 'margen_utilidad_pct': round((costo_anual / ingreso_anual * 100) if ingreso_anual > 0 else 0, 2)
             },
+            'costos_produccion_detallado': {
+                'costos_directos': [
+                    {
+                        'categoria': '1. LABORES DE CULTIVO',
+                        'subtotal': round(960.00 * self.hectareas, 2),
+                        'items': [
+                            {'nombre': 'Preparación de plantones de sombra', 'costo_total': round(80 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 80, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Desyerbe mecánico (desbrozadora)', 'costo_total': round(160 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 53.33, 'sep': 0, 'oct': 0, 'nov': 53.33, 'dic': 0, 'ene': 0, 'feb': 53.33, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Poda de mantenimiento de café (flosadora)', 'costo_total': round(160 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 4, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 160, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Abonamiento y/o fertilización', 'costo_total': round(160 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 4, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 80, 'nov': 80, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Poda de sombra especies arbóreas', 'costo_total': round(280 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 7, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 40, 'oct': 40, 'nov': 40, 'dic': 40, 'ene': 40, 'feb': 0, 'mar': 40, 'abr': 40, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Poda de sombra especies arbóreas', 'costo_total': round(120 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 3, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 120, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}}
+                        ]
+                    },
+                    {
+                        'categoria': '2. FERTILIZACIÓN',
+                        'subtotal': round(1553.80 * self.hectareas, 2),
+                        'items': [
+                            {'nombre': 'Urea', 'costo_total': round(909 * self.hectareas, 2), 'precio_unitario': 195, 'cantidad': 4.66, 'ud': 'Saco (50 Kg)', 'meses': {'ago': 0, 'sep': 0, 'oct': 454.35, 'nov': 454.35, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Roca Fosfórica', 'costo_total': round(62 * self.hectareas, 2), 'precio_unitario': 50, 'cantidad': 1.24, 'ud': 'Saco (50 Kg)', 'meses': {'ago': 0, 'sep': 0, 'oct': 31, 'nov': 31, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Sulfato de potasio', 'costo_total': round(475 * self.hectareas, 2), 'precio_unitario': 210, 'cantidad': 2.26, 'ud': 'Saco (50 Kg)', 'meses': {'ago': 0, 'sep': 0, 'oct': 237.30, 'nov': 237.30, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Guano de isla', 'costo_total': round(39 * self.hectareas, 2), 'precio_unitario': 55, 'cantidad': 0.7, 'ud': 'Saco (50 Kg)', 'meses': {'ago': 0, 'sep': 0, 'oct': 19.25, 'nov': 19.25, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Abono foliar', 'costo_total': round(70 * self.hectareas, 2), 'precio_unitario': 35, 'cantidad': 2, 'ud': 'Litro', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 70, 'may': 0, 'jun': 0, 'jul': 0}}
+                        ]
+                    },
+                    {
+                        'categoria': '3. CONTROL FITOSANITARIO',
+                        'subtotal': round(989 * self.hectareas, 2),
+                        'items': [
+                            {'nombre': 'Insecticida y Nematicida (Carfouran - Killifuran)', 'costo_total': round(690 * self.hectareas, 2), 'precio_unitario': 115, 'cantidad': 6, 'ud': 'Litro', 'meses': {'ago': 0, 'sep': 345, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 345, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Fungicida cúprico', 'costo_total': round(90 * self.hectareas, 2), 'precio_unitario': 90, 'cantidad': 1, 'ud': 'Kg', 'meses': {'ago': 0, 'sep': 0, 'oct': 45, 'nov': 45, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Adherente', 'costo_total': round(74 * self.hectareas, 2), 'precio_unitario': 37, 'cantidad': 2, 'ud': 'Litro', 'meses': {'ago': 0, 'sep': 10.57, 'oct': 10.57, 'nov': 10.57, 'dic': 10.57, 'ene': 10.57, 'feb': 0, 'mar': 10.57, 'abr': 10.57, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Herbicida (Basoxla - Glyphosate)', 'costo_total': round(135 * self.hectareas, 2), 'precio_unitario': 45, 'cantidad': 3, 'ud': 'Litro', 'meses': {'ago': 0, 'sep': 45, 'oct': 0, 'nov': 0, 'dic': 45, 'ene': 0, 'feb': 0, 'mar': 45, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}}
+                        ]
+                    },
+                    {
+                        'categoria': '4. COSECHA',
+                        'subtotal': round(880 * self.hectareas, 2),
+                        'items': [
+                            {'nombre': 'Cosecha de mazorcas', 'costo_total': round(400 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 10, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 400, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Quiebre de mazorcas', 'costo_total': round(80 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 80, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Fermentación', 'costo_total': round(160 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 4, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 160, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Secado', 'costo_total': round(80 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 80, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Limpieza y Selección de granos', 'costo_total': round(80 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 80, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Envasado', 'costo_total': round(80 * self.hectareas, 2), 'precio_unitario': 40, 'cantidad': 2, 'ud': 'Jornal', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 80, 'jun': 0, 'jul': 0}}
+                        ]
+                    },
+                    {
+                        'categoria': '5. GASTOS ESPECIALES',
+                        'subtotal': round(853.52  * self.hectareas, 2),
+                        'items': [
+                            {'nombre': 'Plantones de reposición de sombra', 'costo_total': round(21 * self.hectareas, 2), 'precio_unitario': 0.70, 'cantidad': 30, 'ud': 'Unid', 'meses': {'ago': 21, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Transporte de insumos', 'costo_total': round(36 * self.hectareas, 2), 'precio_unitario': 3.00, 'cantidad': 12, 'ud': 'Sacos', 'meses': {'ago': 36, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Transporte de cosecha', 'costo_total': round(78 * self.hectareas, 2), 'precio_unitario': 3.00, 'cantidad': 26, 'ud': 'Sacos', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 78, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Sacos (1 QQ)', 'costo_total': round(52 * self.hectareas, 2), 'precio_unitario': 2.00, 'cantidad': 26, 'ud': 'Unid', 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 52, 'jun': 0, 'jul': 0}},
+                            {'nombre': 'Costo de la instalación inicial (Para 15 Años)', 'costo_total': round(666.52 * self.hectareas, 2), 'precio_unitario': 667, 'cantidad': 1, 'ud': 'Global', 'meses': {'ago': 66.65, 'sep': 66.65, 'oct': 66.65, 'nov': 66.65, 'dic': 66.65, 'ene': 66.65, 'feb': 66.65, 'mar': 66.65, 'abr': 66.65, 'may': 66.65, 'jun': 0, 'jul': 0}}
+                        ]
+                    }
+                ],
+                'costos_indirectos': [
+                    {'nombre': 'Imprevistos (1.5%)', 'porcentaje': 1.5, 'costo': round(78.54 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 26.18, 'oct': 0, 'nov': 0, 'dic': 26.18, 'ene': 0, 'feb': 0, 'mar': 26.18, 'abr': 26, 'may': 0, 'jun': 0, 'jul': 0}},
+                    {'nombre': 'Gastos operativos (Pago de agua, compra y reparación de herramientas)', 'porcentaje': 2.5, 'costo': round(130.91 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 43.64, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 43.64, 'jun': 0, 'jul': 0}},
+                    {'nombre': 'Asistencia técnica', 'porcentaje': 2.0, 'costo': round(104.73 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 52, 'oct': 0, 'nov': 52.36, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 52.36, 'may': 0, 'jun': 0, 'jul': 0}}
+                ],
+                'costo_tecnico': round(5550.50 * self.hectareas, 2),
+                'gastos_asumidos_productor': round(680.00 * self.hectareas, 2),
+                'costo_sensibilizado': round(costo_anual - round(680.00 * self.hectareas, 2), 2)
+            },
             'analisis_financiero': {
                 'van_tasa_10_pct': round(van_10pct, 2),
                 'tir_porcentaje': round(tir_pct, 2),
