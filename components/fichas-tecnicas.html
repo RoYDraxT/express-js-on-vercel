@@ -521,9 +521,222 @@
 
           <!-- Sector 4: Costos de Instalación -->
           <div class="sector oculto" id="sector-costos-instalacion" data-ficha-id="">
-            <h3>Costos de Instalación</h3>
-            <div class="sector-contenido">
-              <!-- Será llenado con JavaScript -->
+            <div class="sector-header-with-info">
+              <h3>Detalle del Costo de Instalación y Cronograma de Ejecución (1 Año)</h3>
+              <div class="info-icon-wrapper">
+                <span class="info-icon" id="info-instalacion-btn">ℹ</span>
+                <div class="info-tooltip" id="info-instalacion-tooltip">
+                  <p><strong>COSTO TOTAL:</strong> Costo total por hectárea</p>
+                  <p><strong>PRECIO UNITARIO:</strong> Precio de la unidad de medida</p>
+                  <p><strong>CANTIDAD POR HAS:</strong> Cantidad de unidades por hectárea</p>
+                  <p><strong>UD MEDIDA:</strong> Unidad de medida (Jornal, Día, Saco, Litro, etc.)</p>
+                  <p style="margin-top: 10px;"><strong>Meses (Ago-Jul):</strong> Distribución mensual del costo</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="costos-produccion-container">
+              <div class="tabla-costos-wrapper">
+                <table class="tabla-costos-produccion">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Concepto</th>
+                      <th class="precio-header">Costo Total</th>
+                      <th class="precio-unitario-header">Precio Unit.</th>
+                      <th class="cantidad-header">Cant./Has</th>
+                      <th class="unidad-header">UD Medida</th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-costos-instalacion-directos">
+                    <!-- Se llenará dinámicamente -->
+                  </tbody>
+                  <tfoot>
+                    <tr class="total-directos-row">
+                      <td colspan="5"><strong>TOTAL COSTO DIRECTO</strong></td>
+                      <td id="inst-total-ago">-</td>
+                      <td id="inst-total-sep">-</td>
+                      <td id="inst-total-oct">-</td>
+                      <td id="inst-total-nov">-</td>
+                      <td id="inst-total-dic">-</td>
+                      <td id="inst-total-ene">-</td>
+                      <td id="inst-total-feb">-</td>
+                      <td id="inst-total-mar">-</td>
+                      <td id="inst-total-abr">-</td>
+                      <td id="inst-total-may">-</td>
+                      <td id="inst-total-jun">-</td>
+                      <td id="inst-total-jul">-</td>
+                      <td id="inst-total-directo"><strong>-</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <table class="tabla-costos-indirectos">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Concepto</th>
+                      <th class="precio-header">Costo Total</th>
+                      <th class="precio-unitario-header">Porcentaje</th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-costos-instalacion-indirectos">
+                    <!-- Se llenará dinámicamente -->
+                  </tbody>
+                  <tfoot>
+                    <tr class="total-indirectos-row">
+                      <td colspan="3"><strong>TOTAL COSTO INDIRECTO</strong></td>
+                      <td id="inst-total-ind-ago">-</td>
+                      <td id="inst-total-ind-sep">-</td>
+                      <td id="inst-total-ind-oct">-</td>
+                      <td id="inst-total-ind-nov">-</td>
+                      <td id="inst-total-ind-dic">-</td>
+                      <td id="inst-total-ind-ene">-</td>
+                      <td id="inst-total-ind-feb">-</td>
+                      <td id="inst-total-ind-mar">-</td>
+                      <td id="inst-total-ind-abr">-</td>
+                      <td id="inst-total-ind-may">-</td>
+                      <td id="inst-total-ind-jun">-</td>
+                      <td id="inst-total-ind-jul">-</td>
+                      <td id="inst-total-indirecto"><strong>-</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+
+                <table class="tabla-resumen-costos">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Resumen</th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="resumen-total-row">
+                      <td><strong>TOTAL COSTOS DIRECTOS</strong></td>
+                      <td id="inst-res-dir-ago">-</td>
+                      <td id="inst-res-dir-sep">-</td>
+                      <td id="inst-res-dir-oct">-</td>
+                      <td id="inst-res-dir-nov">-</td>
+                      <td id="inst-res-dir-dic">-</td>
+                      <td id="inst-res-dir-ene">-</td>
+                      <td id="inst-res-dir-feb">-</td>
+                      <td id="inst-res-dir-mar">-</td>
+                      <td id="inst-res-dir-abr">-</td>
+                      <td id="inst-res-dir-may">-</td>
+                      <td id="inst-res-dir-jun">-</td>
+                      <td id="inst-res-dir-jul">-</td>
+                      <td id="inst-res-dir-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-gastos-row">
+                      <td><strong>TOTAL COSTOS INDIRECTOS</strong></td>
+                      <td id="inst-res-ind-ago">-</td>
+                      <td id="inst-res-ind-sep">-</td>
+                      <td id="inst-res-ind-oct">-</td>
+                      <td id="inst-res-ind-nov">-</td>
+                      <td id="inst-res-ind-dic">-</td>
+                      <td id="inst-res-ind-ene">-</td>
+                      <td id="inst-res-ind-feb">-</td>
+                      <td id="inst-res-ind-mar">-</td>
+                      <td id="inst-res-ind-abr">-</td>
+                      <td id="inst-res-ind-may">-</td>
+                      <td id="inst-res-ind-jun">-</td>
+                      <td id="inst-res-ind-jul">-</td>
+                      <td id="inst-res-ind-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-total-row">
+                      <td><strong>TOTAL COSTOS (DIRECTOS + INDIRECTOS)</strong></td>
+                      <td id="inst-res-tot-ago">-</td>
+                      <td id="inst-res-tot-sep">-</td>
+                      <td id="inst-res-tot-oct">-</td>
+                      <td id="inst-res-tot-nov">-</td>
+                      <td id="inst-res-tot-dic">-</td>
+                      <td id="inst-res-tot-ene">-</td>
+                      <td id="inst-res-tot-feb">-</td>
+                      <td id="inst-res-tot-mar">-</td>
+                      <td id="inst-res-tot-abr">-</td>
+                      <td id="inst-res-tot-may">-</td>
+                      <td id="inst-res-tot-jun">-</td>
+                      <td id="inst-res-tot-jul">-</td>
+                      <td id="inst-res-tot-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-gastos-row">
+                      <td><strong>GASTOS ASUMIDOS POR PRODUCTOR</strong></td>
+                      <td id="inst-res-gas-ago">-</td>
+                      <td id="inst-res-gas-sep">-</td>
+                      <td id="inst-res-gas-oct">-</td>
+                      <td id="inst-res-gas-nov">-</td>
+                      <td id="inst-res-gas-dic">-</td>
+                      <td id="inst-res-gas-ene">-</td>
+                      <td id="inst-res-gas-feb">-</td>
+                      <td id="inst-res-gas-mar">-</td>
+                      <td id="inst-res-gas-abr">-</td>
+                      <td id="inst-res-gas-may">-</td>
+                      <td id="inst-res-gas-jun">-</td>
+                      <td id="inst-res-gas-jul">-</td>
+                      <td id="inst-res-gas-total"><strong>-</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="resumen-costos">
+                  <div class="resumen-item">
+                    <span class="resumen-label">TOTAL COSTOS DE INSTALACIÓN (I + II):</span>
+                    <span class="resumen-value" id="total-costos-instalacion">S/. -</span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">GASTOS ASUMIDOS POR PRODUCTOR:</span>
+                    <span class="resumen-value" id="gastos-asumidos-instalacion">S/. -</span>
+                  </div>
+                  <div class="resumen-item destacado">
+                    <span class="resumen-label">COSTO TOTAL SENSIBILIZADO:</span>
+                    <span class="resumen-value" id="costo-total-sensibilizado-instalacion">S/. -</span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">VAN (10%):</span>
+                    <span class="resumen-value" id="van-instalacion">S/. -</span>
+                  </div>
+                  <div class="resumen-item">
+                    <span class="resumen-label">TIR:</span>
+                    <span class="resumen-value" id="tir-instalacion">-</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -998,6 +1211,180 @@
         actualizarCuadroCostos(ficha, sensibilizado, ultimoResumenCostos);
       }
 
+      function llenarTablaCostosInstalacion(ficha, sensibilizado) {
+        if (!ficha.costos_instalacion_detallado) return;
+
+        const costos = ficha.costos_instalacion_detallado;
+        const meses = ['ago', 'sep', 'oct', 'nov', 'dic', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul'];
+
+        // Tabla de costos directos
+        const tablaDirectos = document.getElementById('tabla-costos-instalacion-directos');
+        let htmlDirectos = '';
+        let totalesPorMes = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
+        let totalDirectoGlobal = 0;
+
+        costos.costos_directos.forEach(categoria => {
+          const subtotalCategoria = categoria.subtotal || 0;
+          totalDirectoGlobal += subtotalCategoria;
+
+          htmlDirectos += `<tr class="categoria-header-row" style="background-color: #fff59e;">
+            <td colspan="5"><strong>${categoria.categoria}</strong></td>
+            <td colspan="13"></td>
+          </tr>`;
+
+          categoria.items.forEach(item => {
+            const costoTotal = item.costo_total || 0;
+            let fila = `<tr class="item-row">
+              <td>${item.nombre}</td>
+              <td>${formatNumber(costoTotal)}</td>
+              <td>${formatNumber(item.precio_unitario)}</td>
+              <td>${item.cantidad.toFixed(2)}</td>
+              <td>${item.ud}</td>`;
+
+            meses.forEach(mes => {
+              const costoMes = (item.meses && item.meses[mes]) ? item.meses[mes] : 0;
+              totalesPorMes[mes] += costoMes;
+              fila += `<td>${costoMes > 0 ? formatNumber(costoMes) : '-'}</td>`;
+            });
+
+            fila += `<td>${formatNumber(costoTotal)}</td></tr>`;
+            htmlDirectos += fila;
+          });
+
+          htmlDirectos += `<tr class="espacio-blanco"><td colspan="18"></td></tr>`;
+        });
+
+        if (tablaDirectos) {
+          tablaDirectos.innerHTML = htmlDirectos;
+        }
+
+        meses.forEach(mes => {
+          const elem = document.getElementById(`inst-total-${mes}`);
+          if (elem) {
+            elem.textContent = totalesPorMes[mes] > 0 ? formatNumber(totalesPorMes[mes]) : '-';
+          }
+        });
+        const totalDirectoElem = document.getElementById('inst-total-directo');
+        if (totalDirectoElem) {
+          totalDirectoElem.innerHTML = '<strong>' + formatNumber(totalDirectoGlobal) + '</strong>';
+        }
+
+        // Tabla de costos indirectos
+        const tablaIndirectos = document.getElementById('tabla-costos-instalacion-indirectos');
+        let htmlIndirectos = '';
+        let totalIndirectoGlobal = 0;
+        let totalesIndirectosPorMes = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
+
+        costos.costos_indirectos.forEach(item => {
+          const costoIndirecto = item.costo || 0;
+          totalIndirectoGlobal += costoIndirecto;
+
+          let fila = `<tr class="item-row">
+            <td>${item.nombre}</td>
+            <td>${formatNumber(costoIndirecto)}</td>
+            <td>${item.porcentaje.toFixed(2)}%</td>`;
+
+          meses.forEach(mes => {
+            const costoMes = (item.meses && item.meses[mes]) ? item.meses[mes] : 0;
+            totalesIndirectosPorMes[mes] += costoMes;
+            fila += `<td>${costoMes > 0 ? formatNumber(costoMes) : '-'}</td>`;
+          });
+
+          fila += `<td>${formatNumber(costoIndirecto)}</td></tr>`;
+          htmlIndirectos += fila;
+        });
+
+        if (tablaIndirectos) {
+          tablaIndirectos.innerHTML = htmlIndirectos;
+        }
+        meses.forEach(mes => {
+          const elem = document.getElementById(`inst-total-ind-${mes}`);
+          if (elem) {
+            elem.textContent = totalesIndirectosPorMes[mes] > 0 ? formatNumber(totalesIndirectosPorMes[mes]) : '-';
+          }
+        });
+        const totalIndirectoElem = document.getElementById('inst-total-indirecto');
+        if (totalIndirectoElem) {
+          totalIndirectoElem.innerHTML = '<strong>' + formatNumber(totalIndirectoGlobal) + '</strong>';
+        }
+
+        // Resumen instalación
+        const totalInstalacion = totalDirectoGlobal + totalIndirectoGlobal;
+        const gastosAsumidos = (costos.gastos_asumidos_productor !== undefined) ? costos.gastos_asumidos_productor : 0;
+        const costoSensibilizado = (costos.costo_total_sensibilizado !== undefined)
+          ? costos.costo_total_sensibilizado
+          : Math.max(totalInstalacion - gastosAsumidos, 0);
+
+        // Resumen mensual (directos, indirectos, total, gastos asumidos)
+        const gastosAsumidosMeses = costos.gastos_asumidos_meses || {};
+        meses.forEach(mes => {
+          const valDir = totalesPorMes[mes] || 0;
+          const valInd = totalesIndirectosPorMes[mes] || 0;
+          const valTot = valDir + valInd;
+          const valGas = gastosAsumidosMeses[mes] || 0;
+
+          const elemDir = document.getElementById(`inst-res-dir-${mes}`);
+          if (elemDir) {
+            elemDir.textContent = valDir > 0 ? formatNumber(valDir) : '-';
+          }
+
+          const elemInd = document.getElementById(`inst-res-ind-${mes}`);
+          if (elemInd) {
+            elemInd.textContent = valInd > 0 ? formatNumber(valInd) : '-';
+          }
+
+          const elemTot = document.getElementById(`inst-res-tot-${mes}`);
+          if (elemTot) {
+            elemTot.textContent = valTot > 0 ? formatNumber(valTot) : '-';
+          }
+
+          const elemGas = document.getElementById(`inst-res-gas-${mes}`);
+          if (elemGas) {
+            elemGas.textContent = valGas > 0 ? formatNumber(valGas) : '-';
+          }
+        });
+
+        const resDirTotal = document.getElementById('inst-res-dir-total');
+        if (resDirTotal) {
+          resDirTotal.innerHTML = '<strong>' + formatNumber(totalDirectoGlobal) + '</strong>';
+        }
+        const resIndTotal = document.getElementById('inst-res-ind-total');
+        if (resIndTotal) {
+          resIndTotal.innerHTML = '<strong>' + formatNumber(totalIndirectoGlobal) + '</strong>';
+        }
+        const resTotTotal = document.getElementById('inst-res-tot-total');
+        if (resTotTotal) {
+          resTotTotal.innerHTML = '<strong>' + formatNumber(totalInstalacion) + '</strong>';
+        }
+        const resGasTotal = document.getElementById('inst-res-gas-total');
+        if (resGasTotal) {
+          resGasTotal.innerHTML = '<strong>' + formatNumber(gastosAsumidos) + '</strong>';
+        }
+
+        const totalInstalacionElem = document.getElementById('total-costos-instalacion');
+        if (totalInstalacionElem) {
+          totalInstalacionElem.textContent = 'S/. ' + formatNumber(totalInstalacion);
+        }
+        const gastosAsumidosElem = document.getElementById('gastos-asumidos-instalacion');
+        if (gastosAsumidosElem) {
+          gastosAsumidosElem.textContent = 'S/. ' + formatNumber(gastosAsumidos);
+        }
+        const costoSensElem = document.getElementById('costo-total-sensibilizado-instalacion');
+        if (costoSensElem) {
+          costoSensElem.textContent = 'S/. ' + formatNumber(costoSensibilizado);
+        }
+
+        const analisis = ficha.analisis_financiero || {};
+        const vanElem = document.getElementById('van-instalacion');
+        if (vanElem) {
+          vanElem.textContent = 'S/. ' + formatNumber(analisis.van_tasa_10_pct || 0);
+        }
+        const tirElem = document.getElementById('tir-instalacion');
+        if (tirElem) {
+          tirElem.textContent = (analisis.tir_porcentaje !== undefined ? analisis.tir_porcentaje : 0) + '%';
+        }
+      }
+
       function mostrarSectores(ficha) {
         const fichaId = ficha.id_ficha || 'temp-' + Date.now();
         const datos = ficha.datos_proyecto;
@@ -1012,40 +1399,8 @@
         // ========= SECTOR 2: COSTOS DE PRODUCCIÓN DETALLADO =========
         llenarTablaCostosProduccion(ficha, modoSensibilizado);
 
-        // Sector 3: Costos de Instalación (removido del antiguo flujo)
-        // Sector 4: Gráficos y Análisis
-        llenarSector('sector-costos-instalacion', fichaId, [
-          { label: 'Costos Anuales', valor: 'S/. ' + formatNumber(produccion.costos), clase: 'valor-dinero' },
-          { label: 'Utilidad Anual', valor: 'S/. ' + formatNumber(produccion.utilidad), clase: 'valor-dinero' },
-          { label: 'Utilidad 15 años', valor: 'S/. ' + formatNumber(analisis.utilidad_neta_15años), clase: 'valor-dinero' },
-          { label: 'ROI Anual', valor: analisis.roi_anual_porcentaje + '%', clase: 'valor-porcentaje' },
-          { label: 'ROI 15 años', valor: analisis.roi_15años_porcentaje + '%', clase: 'valor-porcentaje' },
-          { label: 'Punto Equilibrio', valor: analisis.punto_equilibrio_años + ' años', clase: 'valor-tiempo' }
-        ]);
-
-        // Sector 4: Costos de Instalación
-        const desgloseInstalacion = [
-          { label: 'Costo Total', valor: 'S/. ' + formatNumber(instalacion.costo_total), clase: 'valor-dinero' },
-          { label: 'Costo por Hectárea', valor: 'S/. ' + formatNumber(instalacion.costo_por_hectarea), clase: 'valor-dinero' }
-        ];
-        
-        if (instalacion.desglose && instalacion.desglose.costo_base) {
-          desgloseInstalacion.push(
-            { label: 'Costo Base', valor: 'S/. ' + formatNumber(instalacion.desglose.costo_base), clase: 'valor-dinero-sec' }
-          );
-          if (instalacion.desglose.sensibilizacion > 0) {
-            desgloseInstalacion.push(
-              { label: 'Sensibilización (+4.5%)', valor: 'S/. ' + formatNumber(instalacion.desglose.sensibilizacion), clase: 'valor-dinero-sec' }
-            );
-          }
-        }
-        
-        desgloseInstalacion.push(
-          { label: 'VAN (10%)', valor: 'S/. ' + formatNumber(analisis.van_tasa_10_pct), clase: 'valor-dinero' },
-          { label: 'TIR', valor: analisis.tir_porcentaje + '%', clase: 'valor-porcentaje' }
-        );
-        
-        llenarSector('sector-costos-instalacion', fichaId, desgloseInstalacion);
+        // ========= SECTOR 4: COSTOS DE INSTALACIÓN DETALLADO =========
+        llenarTablaCostosInstalacion(ficha, modoSensibilizado);
 
         // Hacer visibles todos los sectores
         document.querySelectorAll('.sector').forEach(sector => {
@@ -1287,19 +1642,25 @@
         }
       });
 
-      // Event listener para el ícono informativo de costos
+      // Event listener para los íconos informativos de costos
       document.addEventListener('click', function(e) {
         if (e.target.id === 'info-costos-btn') {
           const tooltip = document.getElementById('info-costos-tooltip');
+          tooltip.classList.toggle('activo');
+          e.stopPropagation();
+        } else if (e.target.id === 'info-instalacion-btn') {
+          const tooltip = document.getElementById('info-instalacion-tooltip');
           tooltip.classList.toggle('activo');
           e.stopPropagation();
         } else if (e.target.closest('.info-tooltip')) {
           // No cerrar si se hace clic dentro del tooltip
           e.stopPropagation();
         } else {
-          // Cerrar el tooltip si se hace clic fuera
-          const tooltip = document.getElementById('info-costos-tooltip');
-          if (tooltip) tooltip.classList.remove('activo');
+          // Cerrar los tooltips si se hace clic fuera
+          const tooltipCostos = document.getElementById('info-costos-tooltip');
+          if (tooltipCostos) tooltipCostos.classList.remove('activo');
+          const tooltipInst = document.getElementById('info-instalacion-tooltip');
+          if (tooltipInst) tooltipInst.classList.remove('activo');
         }
       });
     </script>

@@ -62,9 +62,9 @@ class CalculadoraCacaoConvencional:
         MERMA_PRODUCTIVA = p.MERMA_PRODUCTIVA  # 0.02 (2%)
         
         # ===== COSTOS DE INSTALACIÓN =====
-        # Costo base de instalación (año 0): 9,567 S/
-        COSTO_INSTALACION_BASE = 9997.85
-        # Sensibilización: +4.5% = 431 S/
+        # Costo base de instalación (año 0): 9,998 S/
+        COSTO_INSTALACION_BASE = 9998.00
+        # Sensibilización: gastos asumidos por productor
         SENSIBILIZACION_INSTALACION = 1840.00
         
         if sensibilizado:
@@ -139,6 +139,125 @@ class CalculadoraCacaoConvencional:
             tir_pct = 32.50  # Estimación (mayor al tener mejores flujos)
         
         van_10pct = van_10pct_ha * self.hectareas
+
+        # ===== DETALLE DE COSTOS DE INSTALACIÓN (1 AÑO) =====
+        def _escalar_meses(meses: Dict[str, float]) -> Dict[str, float]:
+            return {k: round(v * self.hectareas, 2) for k, v in meses.items()}
+
+        def _item_instalacion(nombre: str, costo_total: float, precio_unitario: float, cantidad: float, ud: str, meses: Dict[str, float]):
+            return {
+                'nombre': nombre,
+                'costo_total': round(costo_total * self.hectareas, 2),
+                'precio_unitario': precio_unitario,
+                'cantidad': cantidad,
+                'ud': ud,
+                'meses': _escalar_meses(meses)
+            }
+
+        costos_instalacion_directos = [
+            {
+                'categoria': '1. PREPARACIÓN DE TERRENO',
+                'items': [
+                    _item_instalacion('Roce y quema', 240, 40.00, 6, 'Jornal', {'ago': 240}),
+                    _item_instalacion('Limpieza', 240, 40.00, 6, 'Jornal', {'ago': 240})
+                ]
+            },
+            {
+                'categoria': '2. PREPARACIÓN DE HOYOS',
+                'items': [
+                    _item_instalacion('Marcado y Estacado', 160, 40.00, 4, 'Jornal', {'ago': 160}),
+                    _item_instalacion('Apertura de Hoyos (0.4m Prof x 0.3m x 0.3 Diam)', 1600, 40.00, 40, 'Jornal', {'ago': 1600}),
+                    _item_instalacion('Desinfeccion de Hoyos', 200, 40.00, 5, 'Jornal', {'ago': 200}),
+                    _item_instalacion('Pre Tapado (Fertilizaci on en hoyo)', 400, 40.00, 10, 'Jornal', {'sep': 400})
+                ]
+            },
+            {
+                'categoria': '3. PLANTADO',
+                'items': [
+                    _item_instalacion('Plantones de Cacao', 1111, 1.00, 1111, 'Plantones', {'sep': 1111}),
+                    _item_instalacion('Plantones de Sombra temporal (Platano 5.2m x 3.0 m)', 455, 0.70, 650, 'Hijuelos', {'sep': 455}),
+                    _item_instalacion('Plantado y Tapado de Plantas de Cacao', 1200, 40.00, 30, 'Jornal', {'sep': 1200}),
+                    _item_instalacion('Plantado y Tapado de Plantas de Sombra', 240, 40.00, 6, 'Jornal', {'sep': 240})
+                ]
+            },
+            {
+                'categoria': '4. LABORES DE CULTIVO',
+                'items': [
+                    _item_instalacion('Labores de cultivo (mantenimiento)', 320, 40.00, 8, 'Jornal', {'abr': 80, 'may': 80, 'jun': 80, 'jul': 80}),
+                    _item_instalacion('Deshiervo (2 veces año)', 400, 40.00, 10, 'Jornal', {'oct': 200, 'feb': 200}),
+                    _item_instalacion('Fumigados', 480, 40.00, 12, 'Jornal', {'oct': 48, 'nov': 48, 'dic': 48, 'ene': 48, 'feb': 48, 'mar': 48, 'abr': 48, 'may': 48, 'jun': 48, 'jul': 48})
+                ]
+            },
+            {
+                'categoria': '5. FERTILIZACIÓN',
+                'items': [
+                    _item_instalacion('Fosfato Diamonico', 663, 255.00, 2.6, 'Saco (50 kg)', {'sep': 663}),
+                    _item_instalacion('Cloruro de Potasio', 624, 240.00, 2.6, 'Saco (50 kg)', {'sep': 624}),
+                    _item_instalacion('Guano de Isla', 220, 55.00, 4, 'Saco (50 Kg)', {'sep': 220}),
+                    _item_instalacion('Compost', 120, 20.00, 6, 'Saco (50 Kg)', {'sep': 120}),
+                    _item_instalacion('Abono foliar', 70, 35.00, 2, 'Litro', {'nov': 17.5, 'feb': 17.5, 'abr': 17.5, 'jul': 17.5})
+                ]
+            },
+            {
+                'categoria': '6. CONTROL FITOSANITARIO',
+                'items': [
+                    _item_instalacion('Insecticida y Nematicida (Carfoburan - Killfuran)', 460, 115.00, 4, 'Litro', {'oct': 460}),
+                    _item_instalacion('Fungicida cuprico', 90, 90.00, 1, 'Kg', {'oct': 22.5, 'dic': 22.5, 'mar': 22.5, 'jun': 22.5}),
+                    _item_instalacion('Adherente', 74, 37.00, 2, 'Litro', {'oct': 7.4, 'nov': 7.4, 'dic': 7.4, 'ene': 7.4, 'feb': 7.4, 'mar': 7.4, 'abr': 7.4, 'may': 7.4, 'jun': 7.4, 'jul': 7.4}),
+                    _item_instalacion('Desinfectante para hoyos y planton (Captan)', 72, 0.24, 300, 'Gr', {'ago': 72})
+                ]
+            },
+            {
+                'categoria': '7. GASTOS ESPECIALES',
+                'items': [
+                    _item_instalacion('Transporte de insumos', 128, 3.00, 43, 'Global', {'sep': 128})
+                ]
+            }
+        ]
+
+        for categoria in costos_instalacion_directos:
+            categoria['subtotal'] = round(sum(item['costo_total'] for item in categoria['items']), 2)
+
+        costos_instalacion_indirectos = [
+            {
+                'nombre': 'Imprevistos',
+                'porcentaje': 1.0,
+                'costo': round(96 * self.hectareas, 2),
+                'meses': _escalar_meses({'ago': 32, 'dic': 32, 'may': 32})
+            },
+            {
+                'nombre': 'Gastos operativos',
+                'porcentaje': 1.5,
+                'costo': round(144 * self.hectareas, 2),
+                'meses': _escalar_meses({'sep': 36, 'ene': 36, 'abr': 36, 'jul': 36})
+            },
+            {
+                'nombre': 'Asistencia tecnica',
+                'porcentaje': 2.0,
+                'costo': round(191 * self.hectareas, 2),
+                'meses': _escalar_meses({'sep': 96, 'feb': 95})
+            }
+        ]
+
+        total_instalacion_directo = round(sum(cat['subtotal'] for cat in costos_instalacion_directos), 2)
+        total_instalacion_indirecto = round(sum(item['costo'] for item in costos_instalacion_indirectos), 2)
+        total_instalacion = round(total_instalacion_directo + total_instalacion_indirecto, 2)
+        gastos_asumidos_instalacion = round(SENSIBILIZACION_INSTALACION * self.hectareas, 2)
+        costo_total_sensibilizado_instalacion = round(total_instalacion - gastos_asumidos_instalacion, 2)
+        gastos_asumidos_instalacion_meses = _escalar_meses({
+            'ago': 640,
+            'sep': 0,
+            'oct': 248,
+            'nov': 48,
+            'dic': 48,
+            'ene': 48,
+            'feb': 248,
+            'mar': 48,
+            'abr': 128,
+            'may': 128,
+            'jun': 128,
+            'jul': 128
+        })
         
         return {
             'datos_proyecto': {
@@ -234,6 +353,16 @@ class CalculadoraCacaoConvencional:
                 'costo_tecnico': round(5550.50 * self.hectareas, 2),
                 'gastos_asumidos_productor': round(680.00 * self.hectareas, 2),
                 'costo_sensibilizado': round(costo_anual - round(680.00 * self.hectareas, 2), 2)
+            },
+            'costos_instalacion_detallado': {
+                'costos_directos': costos_instalacion_directos,
+                'costos_indirectos': costos_instalacion_indirectos,
+                'total_directo': total_instalacion_directo,
+                'total_indirecto': total_instalacion_indirecto,
+                'total_instalacion': total_instalacion,
+                'gastos_asumidos_productor': gastos_asumidos_instalacion,
+                'gastos_asumidos_meses': gastos_asumidos_instalacion_meses,
+                'costo_total_sensibilizado': costo_total_sensibilizado_instalacion
             },
             'analisis_financiero': {
                 'van_tasa_10_pct': round(van_10pct, 2),
