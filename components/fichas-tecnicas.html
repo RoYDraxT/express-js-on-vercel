@@ -265,6 +265,10 @@
                       <span class="costo-value" id="costo-tecnico">S/. 5,551</span>
                     </div>
                     <div class="costo-item">
+                      <span class="costo-label">Ingreso Bruto de la Venta:</span>
+                      <span class="costo-value" id="ingreso-bruto">S/. 11,514</span>
+                    </div>
+                    <div class="costo-item">
                       <span class="costo-label">Costos Asumidos por Productor:</span>
                       <span class="costo-value" id="costos-asumidos">S/. 680</span>
                     </div>
@@ -660,6 +664,10 @@
         
         // Actualizar valores del cuadro de costos
         document.getElementById('costo-tecnico').textContent = 'S/. ' + formatNumber(totalCostosProduccion.toFixed(2));
+        const ingresoBrutoElem = document.getElementById('ingreso-bruto');
+        if (ingresoBrutoElem) {
+          ingresoBrutoElem.textContent = 'S/. ' + formatNumber(ingresoAnual.toFixed(2));
+        }
         document.getElementById('costos-asumidos').textContent = 'S/. ' + formatNumber(gastosAsumidos.toFixed(2));
         document.getElementById('costos-sensibilizados').textContent = 'S/. ' + formatNumber(costosNetos.toFixed(2));
         document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidad.toFixed(2));
@@ -675,6 +683,13 @@
         if (utilidadLabel) {
           utilidadLabel.textContent = sensibilizado ? 'Utilidad Sensibilizada:' : 'Utilidad No Sensibilizada:';
         }
+
+        const porcentajeItem = document.getElementById('costo-prod-porcentaje');
+        const porcentajeLabel = porcentajeItem ? porcentajeItem.closest('.costo-item')?.querySelector('.costo-label') : null;
+        if (porcentajeLabel) {
+          porcentajeLabel.textContent = sensibilizado ? 'Costo de Prod. Sensibilizado:' : 'Costo de Prod. No Sensibilizado:';
+        }
+        
       }
       
       // Esta función ya no se usa porque solo el cuadro de costos cambia
@@ -1188,14 +1203,16 @@
                 data: costos,
                 backgroundColor: '#ef4444',
                 borderColor: '#dc2626',
-                borderWidth: 1
+                borderWidth: 1,
+                yAxisID: 'y'
               },
               {
                 label: 'Ventas Programadas',
                 data: ventas,
                 backgroundColor: '#22c55e',
                 borderColor: '#16a34a',
-                borderWidth: 1
+                borderWidth: 1,
+                yAxisID: 'y1'
               }
             ]
           },
@@ -1205,6 +1222,18 @@
             scales: {
               y: {
                 beginAtZero: true,
+                ticks: {
+                  callback: function(value) {
+                    return 'S/. ' + value.toLocaleString('es-PE');
+                  }
+                }
+              },
+              y1: {
+                beginAtZero: true,
+                position: 'right',
+                grid: {
+                  drawOnChartArea: false
+                },
                 ticks: {
                   callback: function(value) {
                     return 'S/. ' + value.toLocaleString('es-PE');
