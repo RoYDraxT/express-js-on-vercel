@@ -227,9 +227,9 @@ class CalculadoraCacaoConvencional:
                     }
                 ],
                 'costos_indirectos': [
-                    {'nombre': 'Imprevistos (1.5%)', 'porcentaje': 1.5, 'costo': round(78.54 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 26.18, 'oct': 0, 'nov': 0, 'dic': 26.18, 'ene': 0, 'feb': 0, 'mar': 26.18, 'abr': 26, 'may': 0, 'jun': 0, 'jul': 0}},
-                    {'nombre': 'Gastos operativos (Pago de agua, compra y reparación de herramientas)', 'porcentaje': 2.5, 'costo': round(130.91 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 43.64, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 43.64, 'jun': 0, 'jul': 0}},
-                    {'nombre': 'Asistencia técnica', 'porcentaje': 2.0, 'costo': round(104.73 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 52, 'oct': 0, 'nov': 52.36, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 52.36, 'may': 0, 'jun': 0, 'jul': 0}}
+                    {'nombre': 'Imprevistos (1.5%)', 'porcentaje': 1.5, 'costo': round(78.54 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 26.18, 'oct': 0, 'nov': 0, 'dic': 26.18, 'ene': 0, 'feb': 0, 'mar': 26.18, 'abr': 0, 'may': 0, 'jun': 0, 'jul': 0}},
+                    {'nombre': 'Gastos operativos (Pago de agua, compra y reparación de herramientas)', 'porcentaje': 2.5, 'costo': round(130.91 * self.hectareas, 2), 'meses': {'ago': 44, 'sep': 0, 'oct': 0, 'nov': 0, 'dic': 0, 'ene': 43.64, 'feb': 0, 'mar': 0, 'abr': 0, 'may': 43.64, 'jun': 0, 'jul': 0}},
+                    {'nombre': 'Asistencia técnica', 'porcentaje': 2.0, 'costo': round(104.73 * self.hectareas, 2), 'meses': {'ago': 0, 'sep': 0, 'oct': 52.36, 'nov': 0, 'dic': 0, 'ene': 0, 'feb': 0, 'mar': 0, 'abr': 52.36, 'may': 0, 'jun': 0, 'jul': 0}}
                 ],
                 'costo_tecnico': round(5550.50 * self.hectareas, 2),
                 'gastos_asumidos_productor': round(680.00 * self.hectareas, 2),

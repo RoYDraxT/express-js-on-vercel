@@ -242,7 +242,6 @@
                     </div>
                   </div>
                   <div class="nota-sensibilizado">
-                    <p>Los costos de producción se calculan con el ajuste (sensibilizado)</p>
                     <p class="nota-verde">La columna verde engloba el total de ganancia de Abr/Jul</p>
                   </div>
                 </div>
@@ -367,7 +366,19 @@
                       <th class="concepto-header">Concepto</th>
                       <th class="precio-header">Costo Total</th>
                       <th class="precio-unitario-header">Porcentaje</th>
-                      <th colspan="15"></th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
                     </tr>
                   </thead>
                   <tbody id="tabla-costos-indirectos">
@@ -375,10 +386,110 @@
                   </tbody>
                   <tfoot>
                     <tr class="total-indirectos-row">
-                      <td colspan="2"><strong>TOTAL COSTO INDIRECTO</strong></td>
-                      <td colspan="16"><strong id="total-indirecto">314</strong></td>
+                      <td colspan="3"><strong>TOTAL COSTO INDIRECTO</strong></td>
+                      <td id="total-ind-ago">-</td>
+                      <td id="total-ind-sep">-</td>
+                      <td id="total-ind-oct">-</td>
+                      <td id="total-ind-nov">-</td>
+                      <td id="total-ind-dic">-</td>
+                      <td id="total-ind-ene">-</td>
+                      <td id="total-ind-feb">-</td>
+                      <td id="total-ind-mar">-</td>
+                      <td id="total-ind-abr">-</td>
+                      <td id="total-ind-may">-</td>
+                      <td id="total-ind-jun">-</td>
+                      <td id="total-ind-jul">-</td>
+                      <td id="total-indirecto"><strong>314</strong></td>
                     </tr>
                   </tfoot>
+                </table>
+
+                <!-- Resumen mensual (Directos + Indirectos) -->
+                <table class="tabla-resumen-costos">
+                  <thead>
+                    <tr>
+                      <th class="concepto-header">Resumen</th>
+                      <th>Ago</th>
+                      <th>Sep</th>
+                      <th>Oct</th>
+                      <th>Nov</th>
+                      <th>Dic</th>
+                      <th>Ene</th>
+                      <th>Feb</th>
+                      <th>Mar</th>
+                      <th>Abr</th>
+                      <th>May</th>
+                      <th>Jun</th>
+                      <th>Jul</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="resumen-directos-row">
+                      <td><strong>TOTAL COSTOS DIRECTOS</strong></td>
+                      <td id="res-dir-ago">-</td>
+                      <td id="res-dir-sep">-</td>
+                      <td id="res-dir-oct">-</td>
+                      <td id="res-dir-nov">-</td>
+                      <td id="res-dir-dic">-</td>
+                      <td id="res-dir-ene">-</td>
+                      <td id="res-dir-feb">-</td>
+                      <td id="res-dir-mar">-</td>
+                      <td id="res-dir-abr">-</td>
+                      <td id="res-dir-may">-</td>
+                      <td id="res-dir-jun">-</td>
+                      <td id="res-dir-jul">-</td>
+                      <td id="res-dir-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-indirectos-row">
+                      <td><strong>TOTAL COSTOS INDIRECTOS</strong></td>
+                      <td id="res-ind-ago">-</td>
+                      <td id="res-ind-sep">-</td>
+                      <td id="res-ind-oct">-</td>
+                      <td id="res-ind-nov">-</td>
+                      <td id="res-ind-dic">-</td>
+                      <td id="res-ind-ene">-</td>
+                      <td id="res-ind-feb">-</td>
+                      <td id="res-ind-mar">-</td>
+                      <td id="res-ind-abr">-</td>
+                      <td id="res-ind-may">-</td>
+                      <td id="res-ind-jun">-</td>
+                      <td id="res-ind-jul">-</td>
+                      <td id="res-ind-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-total-row">
+                      <td><strong>TOTAL COSTOS (DIRECTOS + INDIRECTOS)</strong></td>
+                      <td id="res-tot-ago">-</td>
+                      <td id="res-tot-sep">-</td>
+                      <td id="res-tot-oct">-</td>
+                      <td id="res-tot-nov">-</td>
+                      <td id="res-tot-dic">-</td>
+                      <td id="res-tot-ene">-</td>
+                      <td id="res-tot-feb">-</td>
+                      <td id="res-tot-mar">-</td>
+                      <td id="res-tot-abr">-</td>
+                      <td id="res-tot-may">-</td>
+                      <td id="res-tot-jun">-</td>
+                      <td id="res-tot-jul">-</td>
+                      <td id="res-tot-total"><strong>-</strong></td>
+                    </tr>
+                    <tr class="resumen-gastos-row">
+                      <td><strong>GASTOS ASUMIDOS POR PRODUCTOR</strong></td>
+                      <td id="res-gas-ago">-</td>
+                      <td id="res-gas-sep">-</td>
+                      <td id="res-gas-oct">-</td>
+                      <td id="res-gas-nov">-</td>
+                      <td id="res-gas-dic">-</td>
+                      <td id="res-gas-ene">-</td>
+                      <td id="res-gas-feb">-</td>
+                      <td id="res-gas-mar">-</td>
+                      <td id="res-gas-abr">-</td>
+                      <td id="res-gas-may">-</td>
+                      <td id="res-gas-jun">-</td>
+                      <td id="res-gas-jul">-</td>
+                      <td id="res-gas-total"><strong>-</strong></td>
+                    </tr>
+                  </tbody>
                 </table>
                 
                 <!-- Resumen Final -->
@@ -423,6 +534,7 @@
       let allCultivos = [];
       let allCategorias = [];
       let ultimaFicha = null; // Guardar la última ficha calculada      let datosOriginalesDashboard = null; // Para guardar los datos originales del dashboard
+      let ultimoResumenCostos = null;
       // Cargar categorías al iniciar
       async function cargarCategorias() {
         try {
@@ -521,37 +633,48 @@
           : ultimaFicha.calculos_alternativos.no_sensibilizado;
         
         // Actualizar SOLO el cuadro de costos
-        actualizarCuadroCostos(datosAMostrar, sensibilizado);
+        actualizarCuadroCostos(datosAMostrar, sensibilizado, ultimoResumenCostos);
         
         // Actualizar tabla de costos de producción detallado
         llenarTablaCostosProduccion(ultimaFicha, sensibilizado);
       }
       
-      function actualizarCuadroCostos(ficha, sensibilizado) {
-        const ingresoAnual = ficha.produccion_promedio.ingresos || 11514;
-        const costoAnual = ficha.produccion_promedio.costos || 5551;
-        const utilidadAnual = ficha.produccion_promedio.utilidad || 6644;
-        
-        const costoTecnico = costoAnual;
+      function actualizarCuadroCostos(ficha, sensibilizado, resumenCostos = null) {
+        const ingresoAnual = (ficha.produccion_promedio && ficha.produccion_promedio.ingresos !== undefined)
+          ? ficha.produccion_promedio.ingresos
+          : (resumenCostos && resumenCostos.ingresoAnual ? resumenCostos.ingresoAnual : 0);
+        const totalCostosProduccion = (resumenCostos && resumenCostos.totalCostosProduccion !== undefined)
+          ? resumenCostos.totalCostosProduccion
+          : (ficha.produccion_promedio && ficha.produccion_promedio.costos ? ficha.produccion_promedio.costos : 0);
+
         const hectareasFicha = (ficha.datos_proyecto && ficha.datos_proyecto.hectareas) ? ficha.datos_proyecto.hectareas : 1;
-        const costosAsumidos = (ficha.costos_produccion_detallado && ficha.costos_produccion_detallado.gastos_asumidos_productor)
-          ? ficha.costos_produccion_detallado.gastos_asumidos_productor
-          : 680.00 * hectareasFicha;
-        const costosSensibilizados = costoAnual - costosAsumidos;
-        const utilidadSensibilizada = utilidadAnual;
-        const costoProdPorcentaje = (costosSensibilizados / ingresoAnual * 100).toFixed(2);
+        const gastosAsumidos = (resumenCostos && resumenCostos.gastosAsumidos !== undefined)
+          ? resumenCostos.gastosAsumidos
+          : ((ficha.costos_produccion_detallado && ficha.costos_produccion_detallado.gastos_asumidos_productor)
+            ? ficha.costos_produccion_detallado.gastos_asumidos_productor
+            : 680.00 * hectareasFicha);
+
+        const costosNetos = sensibilizado ? (totalCostosProduccion - gastosAsumidos) : totalCostosProduccion;
+        const utilidad = ingresoAnual - costosNetos;
+        const costoProdPorcentaje = ingresoAnual > 0 ? (costosNetos / ingresoAnual * 100).toFixed(2) : '0.00';
         
         // Actualizar valores del cuadro de costos
-        document.getElementById('costo-tecnico').textContent = 'S/. ' + formatNumber(costoTecnico.toFixed(2));
-        document.getElementById('costos-asumidos').textContent = 'S/. ' + formatNumber(costosAsumidos.toFixed(2));
-        document.getElementById('costos-sensibilizados').textContent = 'S/. ' + formatNumber(costosSensibilizados.toFixed(2));
-        document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidadSensibilizada.toFixed(2));
+        document.getElementById('costo-tecnico').textContent = 'S/. ' + formatNumber(totalCostosProduccion.toFixed(2));
+        document.getElementById('costos-asumidos').textContent = 'S/. ' + formatNumber(gastosAsumidos.toFixed(2));
+        document.getElementById('costos-sensibilizados').textContent = 'S/. ' + formatNumber(costosNetos.toFixed(2));
+        document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidad.toFixed(2));
         document.getElementById('costo-prod-porcentaje').textContent = costoProdPorcentaje + '%';
         
-        // Cambiar el label del costo principal según el modo
+        // Cambiar labels según el modo
         const costoItemPrincipal = document.getElementById('costo-item-principal');
         const labelPrincipal = costoItemPrincipal.querySelector('.costo-label');
         labelPrincipal.textContent = sensibilizado ? 'Costos Sensibilizados:' : 'Costos No Sensibilizados:';
+
+        const utilidadItem = document.getElementById('utilidad-sensibilizada');
+        const utilidadLabel = utilidadItem ? utilidadItem.closest('.costo-item')?.querySelector('.costo-label') : null;
+        if (utilidadLabel) {
+          utilidadLabel.textContent = sensibilizado ? 'Utilidad Sensibilizada:' : 'Utilidad No Sensibilizada:';
+        }
       }
       
       // Esta función ya no se usa porque solo el cuadro de costos cambia
@@ -706,35 +829,158 @@
         const tablaCostosIndirectos = document.getElementById('tabla-costos-indirectos');
         let htmlIndirectos = '';
         let totalIndirectoGlobal = 0;
+        let totalesIndirectosPorMes = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
         
         costos.costos_indirectos.forEach(item => {
           const costoIndirecto = item.costo;
           totalIndirectoGlobal += costoIndirecto;
           
-          let fila = `<tr>
+          let fila = `<tr class="item-row">
             <td>${item.nombre}</td>
             <td>${formatNumber(costoIndirecto)}</td>
-            <td>${item.porcentaje.toFixed(2)}%</td>
-            <td colspan="15"></td>`;
+            <td>${item.porcentaje.toFixed(2)}%</td>`;
           
+          meses.forEach(mes => {
+            const costoMes = (item.meses && item.meses[mes]) ? item.meses[mes] : 0;
+            totalesIndirectosPorMes[mes] += costoMes;
+            fila += `<td>${costoMes > 0 ? formatNumber(costoMes) : '-'}</td>`;
+          });
+          
+          fila += `<td>${formatNumber(costoIndirecto)}</td></tr>`;
           htmlIndirectos += fila;
         });
         
         tablaCostosIndirectos.innerHTML = htmlIndirectos;
-        document.getElementById('total-indirecto').textContent = formatNumber(totalIndirectoGlobal);
+        meses.forEach(mes => {
+          const elem = document.getElementById(`total-ind-${mes}`);
+          if (elem) {
+            elem.textContent = totalesIndirectosPorMes[mes] > 0 ? formatNumber(totalesIndirectosPorMes[mes]) : '-';
+          }
+        });
+        document.getElementById('total-indirecto').innerHTML = '<strong>' + formatNumber(totalIndirectoGlobal) + '</strong>';
+
+        // Resumen mensual: directos, indirectos y total
+        meses.forEach(mes => {
+          const valDir = totalesPorMes[mes] || 0;
+          const valInd = totalesIndirectosPorMes[mes] || 0;
+          const valTot = valDir + valInd;
+
+          const elemDir = document.getElementById(`res-dir-${mes}`);
+          if (elemDir) {
+            elemDir.textContent = valDir > 0 ? formatNumber(valDir) : '-';
+          }
+
+          const elemInd = document.getElementById(`res-ind-${mes}`);
+          if (elemInd) {
+            elemInd.textContent = valInd > 0 ? formatNumber(valInd) : '-';
+          }
+
+          const elemTot = document.getElementById(`res-tot-${mes}`);
+          if (elemTot) {
+            elemTot.textContent = valTot > 0 ? formatNumber(valTot) : '-';
+          }
+        });
+
+        const totalGlobal = totalDirectoGlobal + totalIndirectoGlobal;
+        const resDirTotal = document.getElementById('res-dir-total');
+        if (resDirTotal) {
+          resDirTotal.innerHTML = '<strong>' + formatNumber(totalDirectoGlobal) + '</strong>';
+        }
+        const resIndTotal = document.getElementById('res-ind-total');
+        if (resIndTotal) {
+          resIndTotal.innerHTML = '<strong>' + formatNumber(totalIndirectoGlobal) + '</strong>';
+        }
+        const resTotTotal = document.getElementById('res-tot-total');
+        if (resTotTotal) {
+          resTotTotal.innerHTML = '<strong>' + formatNumber(totalGlobal) + '</strong>';
+        }
+
+        // Gastos asumidos por productor (suma de subcategorías específicas)
+        const gastosAsumidosMeses = { ago: 0, sep: 0, oct: 0, nov: 0, dic: 0, ene: 0, feb: 0, mar: 0, abr: 0, may: 0, jun: 0, jul: 0 };
+        const nombresGastosAsumidos = [
+          'plantones de reposición de sombra',
+          'abonamiento y/o fertilización',
+          'fumigados',
+          'fungicida',
+          'insecticida',
+          'herbicida',
+          'secado',
+          'ensacado',
+          'envasado'
+        ];
+
+        const matchGastoAsumido = (nombre) => {
+          const nombreNormalizado = nombre.toLowerCase();
+          return nombresGastosAsumidos.some(ref => nombreNormalizado.includes(ref));
+        };
+
+        let totalGastosAsumidos = 0;
+        costos.costos_directos.forEach(categoria => {
+          categoria.items.forEach(item => {
+            if (matchGastoAsumido(item.nombre)) {
+              totalGastosAsumidos += item.costo_total || 0;
+              meses.forEach(mes => {
+                gastosAsumidosMeses[mes] += (item.meses && item.meses[mes]) ? item.meses[mes] : 0;
+              });
+            }
+          });
+        });
+
+        // Ajustar al total de gastos asumidos si está definido en la ficha
+        const gastosAsumidosMeta = (costos.gastos_asumidos_productor !== undefined)
+          ? costos.gastos_asumidos_productor
+          : null;
+        if (gastosAsumidosMeta !== null && totalGastosAsumidos > 0 && Math.abs(totalGastosAsumidos - gastosAsumidosMeta) > 0.01) {
+          const factor = gastosAsumidosMeta / totalGastosAsumidos;
+          totalGastosAsumidos = gastosAsumidosMeta;
+          meses.forEach(mes => {
+            gastosAsumidosMeses[mes] = gastosAsumidosMeses[mes] * factor;
+          });
+        }
+
+        meses.forEach(mes => {
+          const elemGas = document.getElementById(`res-gas-${mes}`);
+          if (elemGas) {
+            elemGas.textContent = gastosAsumidosMeses[mes] > 0 ? formatNumber(gastosAsumidosMeses[mes]) : '-';
+          }
+        });
+        const resGasTotal = document.getElementById('res-gas-total');
+        if (resGasTotal) {
+          resGasTotal.innerHTML = '<strong>' + formatNumber(totalGastosAsumidos) + '</strong>';
+        }
+
+        // Actualizar gráfico con costos mensuales reales
+        const costosMensualesBase = meses.map(mes => (totalesPorMes[mes] || 0) + (totalesIndirectosPorMes[mes] || 0));
+        const costosMensuales = costosMensualesBase.map((val, idx) => {
+          const mesKey = meses[idx];
+          const ajuste = sensibilizado ? (gastosAsumidosMeses[mesKey] || 0) : 0;
+          return Math.max(val - ajuste, 0);
+        });
+        const ingresoAnualGrafico = (ficha.produccion_promedio && ficha.produccion_promedio.ingresos)
+          ? ficha.produccion_promedio.ingresos
+          : 0;
+        crearGraficoEvolutivo(costosMensuales, ingresoAnualGrafico);
         
         // Actualizar resumen
         const totalCostosProduccion = totalDirectoGlobal + totalIndirectoGlobal;
         const gastosAsumidos = (costos.gastos_asumidos_productor !== undefined)
           ? costos.gastos_asumidos_productor
           : 680.00 * hectareas;
-        const costosSensibilizados = sensibilizado ? (totalCostosProduccion - gastosAsumidos) : totalCostosProduccion;
+        const costosSensibilizados = (totalCostosProduccion - gastosAsumidos);
         const ingresosMensuales = (ficha.produccion_promedio.ingresos || 11514);
         
         document.getElementById('total-costos-produccion').textContent = 'S/. ' + formatNumber(totalCostosProduccion);
         document.getElementById('gastos-asumidos-productor').textContent = 'S/. ' + formatNumber(gastosAsumidos);
         document.getElementById('costos-programados-sensibilizado').textContent = 'S/. ' + formatNumber(costosSensibilizados);
         document.getElementById('ventas-programadas').textContent = 'S/. ' + formatNumber(ingresosMensuales);
+
+        // Guardar resumen para el cuadro de costos del sector 1
+        ultimoResumenCostos = {
+          totalCostosProduccion,
+          gastosAsumidos,
+          ingresoAnual: ingresosMensuales
+        };
+        actualizarCuadroCostos(ficha, sensibilizado, ultimoResumenCostos);
       }
 
       function mostrarSectores(ficha) {
@@ -907,12 +1153,11 @@
         document.getElementById('utilidad-sensibilizada').textContent = 'S/. ' + formatNumber(utilidadSensibilizada.toFixed(2));
         document.getElementById('costo-prod-porcentaje').textContent = costoProdPorcentaje + '%';
         
-        // Crear gráfico
-        crearGraficoEvolutivo(datos.hectareas, ingresoAnual);
+        // El gráfico se actualiza desde la tabla de costos
       }
 
       let chartEvolutivo = null;
-      function crearGraficoEvolutivo(hectareas, ingresoAnual) {
+      function crearGraficoEvolutivo(costosMensuales, ingresoAnual) {
         const ctx = document.getElementById('graficoEvolutivo');
         if (!ctx) return;
         
@@ -921,34 +1166,17 @@
           chartEvolutivo.destroy();
         }
         
-        // Datos mensuales (ejemplo basado en la imagen)
+        // Datos mensuales
         const meses = ['Ago', 'Sep', 'Oct', 'Nov', 'Dic', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul'];
         
-        // Costos distribuidos (principalmente en primeros meses)
-        const costos = [
-          2240 * hectareas, // Ago
-          653 * hectareas,  // Sep
-          1636 * hectareas, // Oct
-          927 * hectareas,  // Nov
-          148 * hectareas,  // Dic
-          666 * hectareas,  // Ene
-          220 * hectareas,  // Feb
-          148 * hectareas,  // Mar
-          220 * hectareas,  // Abr
-          200 * hectareas,  // May
-          960 * hectareas,  // Jun
-          0                 // Jul
-        ];
+        // Costos mensuales calculados
+        const costos = (Array.isArray(costosMensuales) && costosMensuales.length === 12)
+          ? costosMensuales
+          : new Array(12).fill(0);
         
-        // Ingresos concentrados en meses de cosecha (Abr-Jul)
-        const ingresoMensual = ingresoAnual / 4; // Dividido en 4 meses
-        const ventas = [
-          0, 0, 0, 0, 0, 0, 0, 0, 
-          ingresoMensual, 
-          ingresoMensual, 
-          ingresoMensual, 
-          ingresoMensual
-        ];
+        // Ingresos en una sola barra (Jun/Jul) con el total anual
+        const ventas = new Array(12).fill(0);
+        ventas[11] = ingresoAnual || 0; // Jul
         
         chartEvolutivo = new Chart(ctx, {
           type: 'bar',

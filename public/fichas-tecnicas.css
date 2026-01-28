@@ -810,7 +810,8 @@
 }
 
 .tabla-costos-produccion,
-.tabla-costos-indirectos {
+.tabla-costos-indirectos,
+.tabla-resumen-costos {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 20px;
@@ -820,7 +821,9 @@
 .tabla-costos-produccion th,
 .tabla-costos-produccion td,
 .tabla-costos-indirectos th,
-.tabla-costos-indirectos td {
+.tabla-costos-indirectos td,
+.tabla-resumen-costos th,
+.tabla-resumen-costos td {
   padding: 10px 6px;
   text-align: right;
   border: 1px solid #e0e0e0;
@@ -829,7 +832,9 @@
 .tabla-costos-produccion th.concepto-header,
 .tabla-costos-produccion td:first-child,
 .tabla-costos-indirectos th.concepto-header,
-.tabla-costos-indirectos td:first-child {
+.tabla-costos-indirectos td:first-child,
+.tabla-resumen-costos th.concepto-header,
+.tabla-resumen-costos td:first-child {
   text-align: left;
 }
 
@@ -845,7 +850,8 @@
 }
 
 .tabla-costos-produccion thead th,
-.tabla-costos-indirectos thead th {
+.tabla-costos-indirectos thead th,
+.tabla-resumen-costos thead th {
   background: #f0f9ff;
   font-weight: 600;
   color: #0c4a6e;
@@ -854,12 +860,14 @@
 }
 
 .tabla-costos-produccion tbody tr:hover,
-.tabla-costos-indirectos tbody tr:hover {
+.tabla-costos-indirectos tbody tr:hover,
+.tabla-resumen-costos tbody tr:hover {
   background: #f8fafc;
 }
 
 .tabla-costos-produccion tfoot tr,
-.tabla-costos-indirectos tfoot tr {
+.tabla-costos-indirectos tfoot tr,
+.tabla-resumen-costos tfoot tr {
   background: #f0f9ff;
   font-weight: 600;
 }
@@ -916,6 +924,18 @@
 .total-indirectos-row {
   background: #dbeafe;
   font-weight: 700;
+  color: #0c4a6e;
+}
+
+.tabla-resumen-costos tbody tr.resumen-total-row {
+  background: #dbeafe;
+  font-weight: 700;
+  color: #0c4a6e;
+}
+
+.tabla-resumen-costos tbody tr.resumen-gastos-row {
+  background: #f0f9ff;
+  font-weight: 600;
   color: #0c4a6e;
 }
 
