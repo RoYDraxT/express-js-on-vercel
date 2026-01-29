@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <title>Evaluación de Crédito - EcoModel</title>
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/evaluacion-credito.css" />
   </head>
   <body>
     <div class="container">
@@ -32,9 +33,414 @@
       </nav>
       
       <main class="content">
-        <h1>Evaluación de Crédito</h1>
-        <p>Sistema inteligente para evaluar solicitudes de crédito con análisis en tiempo real</p>
+        <div class="page-header">
+          <div>
+            <h1>Evaluación de Proyecto</h1>
+            <p>Motor de scoring crediticio y ambiental.</p>
+          </div>
+          <button class="btn-primary" id="btn-ejecutar">Ejecutar EcoModel+</button>
+        </div>
+
+        <div class="eval-layout">
+          <section class="eval-left">
+            <div class="eval-tabs" role="tablist" aria-label="Secciones de evaluación">
+              <button class="tab active" type="button" data-tab="cliente" role="tab" aria-selected="true">Cliente</button>
+              <button class="tab" type="button" data-tab="financiero" role="tab" aria-selected="false">Financiero</button>
+              <button class="tab" type="button" data-tab="ambiental" role="tab" aria-selected="false">Ambiental</button>
+            </div>
+
+            <div class="info-banner">
+              Estos datos alimentan el <strong>EcoScore</strong>. La precisión es vital para la aprobación del crédito verde.
+            </div>
+
+            <form class="eval-form" id="form-evaluacion">
+              <div class="tab-panels">
+                <div class="eval-card tab-panel is-active" data-panel="cliente" role="tabpanel" aria-hidden="false">
+                  <h3>Cliente</h3>
+                  <div class="form-grid">
+                  <div class="form-item">
+                    <label>Región</label>
+                    <input type="text" id="region" value="Cusco" />
+                  </div>
+                  <div class="form-item">
+                    <label>Provincia</label>
+                    <input type="text" id="provincia" value="La Convención" />
+                  </div>
+                  <div class="form-item">
+                    <label>Distrito</label>
+                    <input type="text" id="distrito" value="Echarati" />
+                  </div>
+                  <div class="form-item">
+                    <label>Agencia</label>
+                    <input type="text" id="agencia" value="Agencia Echarati" />
+                  </div>
+                  <div class="form-item">
+                    <label>Sexo</label>
+                    <select id="sexo">
+                      <option value="Masculino" selected>Masculino</option>
+                      <option value="Femenino">Femenino</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>Edad</label>
+                    <input type="number" id="edad" value="45" min="18" max="90" />
+                  </div>
+                  <div class="form-item">
+                    <label>¿Cliente Nuevo?</label>
+                    <select id="cliente_nuevo">
+                      <option value="No" selected>No</option>
+                      <option value="Sí">Sí</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>Actividad</label>
+                    <input type="text" id="actividad_principal" value="Café" />
+                  </div>
+                  </div>
+                </div>
+
+                <div class="eval-card tab-panel" data-panel="financiero" role="tabpanel" aria-hidden="true">
+                  <h3>Financiero</h3>
+                  <div class="form-grid">
+                  <div class="form-item">
+                    <label>Monto del Crédito (S/.)</label>
+                    <input type="number" id="monto_credito" value="15000" min="0" step="100" />
+                  </div>
+                  <div class="form-item">
+                    <label>TEA (%)</label>
+                    <input type="number" id="tea" value="18" min="0" step="0.1" />
+                  </div>
+                  <div class="form-item">
+                    <label>Plazo (meses)</label>
+                    <input type="number" id="plazo_meses" value="24" min="1" />
+                  </div>
+                  <div class="form-item">
+                    <label>Destino de Crédito</label>
+                    <select id="destino_credito">
+                      <option value="Capital de trabajo" selected>Capital de trabajo</option>
+                      <option value="Activo fijo">Activo fijo</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="eval-card tab-panel" data-panel="ambiental" role="tabpanel" aria-hidden="true">
+                  <h3>Ambiental</h3>
+                  <div class="form-grid">
+                  <div class="form-item">
+                    <label>Área total (ha)</label>
+                    <input type="number" id="area_total" value="1.2" min="0" step="0.1" />
+                  </div>
+                  <div class="form-item">
+                    <label>Área a cultivar (ha)</label>
+                    <input type="number" id="area_cultivar" value="1.0" min="0" step="0.1" />
+                  </div>
+                  <div class="form-item">
+                    <label>¿Libre deforestación?</label>
+                    <select id="predio_libre_deforest">
+                      <option value="">Selecciona</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>¿Fuera de ANP?</label>
+                    <select id="predio_fuera_anp">
+                      <option value="">Selecciona</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>¿Tiene SAF?</label>
+                    <select id="predio_saf">
+                      <option value="">Selecciona</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>Edad SAF (años)</label>
+                    <input type="number" id="edad_saf" value="2" min="0" step="1" />
+                  </div>
+                  <div class="form-item">
+                    <label>¿Abonos orgánicos?</label>
+                    <select id="uso_abonos">
+                      <option value="">Selecciona</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label>¿Manejo plagas?</label>
+                    <select id="manejo_plagas">
+                      <option value="">Selecciona</option>
+                      <option value="Sí">Sí</option>
+                      <option value="No">No</option>
+                    </select>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button class="btn-ghost" type="button" id="btn-back">Retroceder</button>
+                <button class="btn-secondary" type="button" id="btn-next">Siguiente</button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="eval-dashboard">
+            <div class="dashboard-card">
+              <div class="dashboard-header">
+                <h4>Resumen de IA</h4>
+                <div class="badge">EcoScore</div>
+              </div>
+              <div class="score-ring" id="eco-ring" style="--score: 0;">
+                <div class="score-center">
+                  <span class="score-number" id="eco-score">--</span>
+                  <span class="score-label">EcoScore</span>
+                </div>
+              </div>
+              <p class="resumen-text" id="resumen-ia">--</p>
+
+              <div class="decision-row">
+                <span>Decisión</span>
+                <span class="decision-chip" id="decision">ESPERANDO</span>
+              </div>
+              <div class="metric-row">
+                <span>Pérdida Esperada</span>
+                <strong id="perdida-esperada">--</strong>
+              </div>
+              <div class="metric-row">
+                <span>Prob. Impago</span>
+                <strong id="prob-impago">--</strong>
+              </div>
+
+              <button class="btn-dark" type="button">Formalizar Crédito</button>
+            </div>
+
+            <div class="info-card">
+              <strong>Eco-Tip:</strong> <span id="eco-tip">Complete los datos ambientales para activar la IA.</span>
+            </div>
+          </aside>
+        </div>
       </main>
     </div>
+    <script>
+      const btnEjecutar = document.getElementById('btn-ejecutar');
+      const btnNext = document.getElementById('btn-next');
+      const btnBack = document.getElementById('btn-back');
+      const tabs = Array.from(document.querySelectorAll('.tab'));
+      const panels = Array.from(document.querySelectorAll('.tab-panel'));
+      const tabOrder = ['cliente', 'financiero', 'ambiental'];
+      let currentEcoScore = 0;
+      let lastResult = null;
+
+      function getValue(id) {
+        const el = document.getElementById(id);
+        return el ? el.value : '';
+      }
+
+      function setDecision(decision) {
+        const elem = document.getElementById('decision');
+        if (!elem) return;
+        elem.textContent = decision;
+        elem.classList.remove('aprobado', 'observacion', 'rechazado');
+        if (decision === 'APROBADO') elem.classList.add('aprobado');
+        if (decision === 'OBSERVACIÓN') elem.classList.add('observacion');
+        if (decision === 'RECHAZADO') elem.classList.add('rechazado');
+      }
+
+      function setActiveTab(tabKey) {
+        tabs.forEach((tab) => {
+          const active = tab.dataset.tab === tabKey;
+          tab.classList.toggle('active', active);
+          tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        panels.forEach((panel) => {
+          const active = panel.dataset.panel === tabKey;
+          panel.classList.toggle('is-active', active);
+          panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+        });
+        const index = tabOrder.indexOf(tabKey);
+        if (btnBack) btnBack.disabled = index <= 0;
+        if (btnNext) btnNext.textContent = index >= tabOrder.length - 1 ? 'Evaluar' : 'Siguiente';
+      }
+
+      function simularEcoScore(payload) {
+        const areaTotal = Number(payload.area_total) || 0;
+        const areaCultivar = Number(payload.area_cultivar) || 0;
+        const edadSaf = Number(payload.edad_saf) || 0;
+        const checks = [
+          payload.predio_saf,
+          payload.predio_libre_deforest,
+          payload.predio_fuera_anp,
+          payload.uso_abonos,
+          payload.manejo_plagas
+        ].map((v) => (String(v || '').toLowerCase() === 'sí'));
+        const practicas = checks.filter(Boolean).length;
+        const base = 55 + practicas * 7;
+        const ratio = areaTotal > 0 ? Math.min(areaCultivar / areaTotal, 1) : 0.5;
+        const ajusteArea = (ratio - 0.5) * 10;
+        const ajusteSaf = Math.min(edadSaf, 10) * 1.2;
+        return Math.max(0, Math.min(100, Math.round(base + ajusteArea + ajusteSaf)));
+      }
+
+      function animateValue(element, from, to, formatter, duration = 700) {
+        if (!element) return;
+        const start = performance.now();
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const value = from + (to - from) * progress;
+          element.textContent = formatter(value);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function animateEcoScore(target) {
+        const safeTarget = Math.max(0, Math.min(100, Number(target) || 0));
+        const start = performance.now();
+        const from = currentEcoScore;
+        const duration = 700;
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const value = from + (safeTarget - from) * progress;
+          currentEcoScore = value;
+          actualizarScoreRing(value);
+          const scoreElem = document.getElementById('eco-score');
+          if (scoreElem) scoreElem.textContent = Math.round(value);
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function aplicarResultados(data) {
+        if (!data) return;
+        lastResult = data;
+        if (typeof data.resumen_ia === 'string' && data.resumen_ia !== '') {
+          document.getElementById('resumen-ia').textContent = data.resumen_ia;
+        }
+        if (data.eco_score !== undefined) {
+          animateEcoScore(Number(data.eco_score));
+        }
+        if (data.decision) setDecision(data.decision);
+        if (data.perdida_esperada !== undefined) {
+          const elem = document.getElementById('perdida-esperada');
+          const target = Number(data.perdida_esperada);
+          animateValue(elem, 0, target, (v) => 'S/. ' + v.toFixed(2));
+        }
+        if (data.prob_impago !== undefined) {
+          const elem = document.getElementById('prob-impago');
+          const target = Number(data.prob_impago);
+          animateValue(elem, 0, target, (v) => v.toFixed(2) + '%');
+        }
+        if (typeof data.eco_tip === 'string' && data.eco_tip !== '') {
+          document.getElementById('eco-tip').textContent = data.eco_tip;
+        }
+      }
+
+      async function ejecutarModelo() {
+        btnEjecutar.disabled = true;
+        btnEjecutar.textContent = 'Procesando...';
+
+        const payload = {
+          region: getValue('region'),
+          provincia: getValue('provincia'),
+          distrito: getValue('distrito'),
+          agencia: getValue('agencia'),
+          sexo: getValue('sexo'),
+          edad: getValue('edad'),
+          cliente_nuevo: getValue('cliente_nuevo'),
+          actividad_principal: getValue('actividad_principal'),
+          monto_credito: getValue('monto_credito'),
+          tea: getValue('tea'),
+          plazo_meses: getValue('plazo_meses'),
+          destino_credito: getValue('destino_credito'),
+          area_cultivar: getValue('area_cultivar'),
+          area_total: getValue('area_total'),
+          edad_saf: getValue('edad_saf'),
+          predio_saf: getValue('predio_saf'),
+          predio_libre_deforest: getValue('predio_libre_deforest'),
+          predio_fuera_anp: getValue('predio_fuera_anp'),
+          uso_abonos: getValue('uso_abonos'),
+          manejo_plagas: getValue('manejo_plagas')
+        };
+
+        const ecoSim = simularEcoScore(payload);
+        animateEcoScore(ecoSim);
+
+        try {
+          const response = await fetch('/api/evaluacion-credito', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || 'Error desconocido');
+          }
+
+          aplicarResultados(data);
+        } catch (error) {
+          const resumenElem = document.getElementById('resumen-ia');
+          const decisionElem = document.getElementById('decision');
+          if (lastResult) {
+            aplicarResultados(lastResult);
+          } else if (resumenElem && (resumenElem.textContent === '--' || resumenElem.textContent === '')) {
+            resumenElem.textContent = 'Error al ejecutar el modelo.';
+          }
+          if (!lastResult && decisionElem && decisionElem.textContent === 'ESPERANDO') {
+            setDecision('ESPERANDO');
+          }
+        } finally {
+          btnEjecutar.disabled = false;
+          btnEjecutar.textContent = 'Ejecutar EcoModel+';
+        }
+      }
+
+      function actualizarScoreRing(valor) {
+        const ring = document.getElementById('eco-ring');
+        if (!ring) return;
+        const safe = Number.isFinite(valor) ? Math.min(Math.max(valor, 0), 100) : 0;
+        ring.style.setProperty('--score', String(safe));
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => {
+          setActiveTab(tab.dataset.tab);
+        });
+      });
+
+      if (btnNext) {
+        btnNext.addEventListener('click', (e) => {
+          e.preventDefault();
+          const current = tabs.find((tab) => tab.classList.contains('active'));
+          const idx = current ? tabOrder.indexOf(current.dataset.tab) : 0;
+          if (idx < tabOrder.length - 1) {
+            setActiveTab(tabOrder[idx + 1]);
+          } else {
+            ejecutarModelo();
+          }
+        });
+      }
+
+      if (btnBack) {
+        btnBack.addEventListener('click', (e) => {
+          e.preventDefault();
+          const current = tabs.find((tab) => tab.classList.contains('active'));
+          const idx = current ? tabOrder.indexOf(current.dataset.tab) : 0;
+          if (idx > 0) setActiveTab(tabOrder[idx - 1]);
+        });
+      }
+
+      btnEjecutar.addEventListener('click', (e) => {
+        e.preventDefault();
+        ejecutarModelo();
+      });
+      setActiveTab('cliente');
+    </script>
   </body>
 </html>

@@ -137,6 +137,31 @@ app.post('/api/ficha-tecnica-cacao', async (req, res) => {
   }
 })
 
+// Evaluación de crédito (EcoModel)
+app.post('/api/evaluacion-credito', async (req, res) => {
+  try {
+    if (!pythonCmd) {
+      return res.status(500).json({ error: 'Python no está disponible' })
+    }
+
+    const projectRoot = path.join(__dirname, '..')
+    const payload = JSON.stringify(req.body || {})
+
+    const result = execSync(`${pythonCmd} -m modelo_crediticio.ejecutar`, {
+      cwd: projectRoot,
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'pipe'],
+      input: payload
+    })
+
+    const data = JSON.parse(result.trim())
+    res.json(data)
+  } catch (error: any) {
+    console.error('Error evaluación crédito:', error.message)
+    res.status(500).json({ error: 'Error al evaluar crédito' })
+  }
+})
+
 // Health check
 app.get('/healthz', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() })
